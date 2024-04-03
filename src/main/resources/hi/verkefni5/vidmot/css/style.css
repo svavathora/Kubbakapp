@@ -1,0 +1,12 @@
+#fxTimi, #fxStig {
+    -fx-font-size: 20px;
+}
+
+.label {
+    -fx-font-size: 20px;
+}
+
+
+#fxLeikbord {
+    -fx-background-color: grey;
+}

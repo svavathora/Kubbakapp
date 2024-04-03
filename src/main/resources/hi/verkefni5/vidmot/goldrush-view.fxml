@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import hi.verkefni5.vidmot.Leikbord?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="hi.verkefni5.vidmot.GoldController" stylesheets="@css/style.css" >
+  <fx:include source="menu-view.fxml" fx:id="menuStyring"/>
+
+  <Leikbord fx:id="fxLeikbord" />
+  <Pane VBox.vgrow="ALWAYS" />
+  <HBox alignment="CENTER" spacing="20" prefHeight="50">
+    <Label fx:id="fxTimi" text="00:00" />
+    <Label fx:id="fxStig" text="0"/>
+  </HBox>
+</VBox>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import hi.verkefni5.vidmot.Grafari?>
+<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" prefHeight="1600.0" prefWidth="1000.0">
+    <Grafari fx:id="fxGrafari" />
+</fx:root>
+
