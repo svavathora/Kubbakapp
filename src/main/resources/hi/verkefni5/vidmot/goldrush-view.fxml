@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="hi.verkefni5.vidmot.GoldController" stylesheets="@css/style.css" >
-  <fx:include source="menu-view.fxml" fx:id="menuStyring"/>
+  <fx:include source="valmynd-view.fxml" fx:id="valmyndStyring"/>
 
   <Leikbord fx:id="fxLeikbord" />
   <Pane VBox.vgrow="ALWAYS" />

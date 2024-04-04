@@ -21,7 +21,7 @@ public class GoldController {
     //viðmótstilviksbreytur
 
     @FXML
-    private MenuController menuStyringController;
+    private ValmyndController valmyndStyringController;
 
     @FXML
     private Label fxStig;
@@ -55,7 +55,7 @@ public class GoldController {
      * Leikur hafinn og klukka ræst og stigin og tíminn eru tengd viðmót við property breytur
      */
     public void initialize() {
-        menuStyringController.setGoldController(this);
+        valmyndStyringController.setGoldController(this);
 
         leikur = new Leikur();
         fxLeikbord.setFocusTraversable(true);
@@ -179,12 +179,16 @@ public class GoldController {
      * Tíminn fyrir klukkunu er upphafsstilltur eftir því erfiðleikastigi sem er valið
      */
     private void stillaTima() {
-        this.timi = switch (menuStyringController.getRadioMenuItem().getText()) {
+        /*this.timi = switch (menuStyringController.getRadioMenuItem().getText()) {
             case "Létt" -> 30;
             case "Miðlungs" -> 25;
             case "Erfitt" -> 20;
             default -> 0;
-        };
+        };*/
+    }
+
+    public void resume(){//halda áfram með leik úr valmynd-sunna
+        gullTimeline.play();
     }
 
     /**

@@ -5,19 +5,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="202.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="202.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hi.verkefni5.vidmot.ValmyndController">
    <children>
       <Label alignment="CENTER" minHeight="50.0" minWidth="200.0" text="Valmynd">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Button cache="true" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Nýr leikur">
+      <Button fx:id="nyrLeikur" onAction="#onNyrLeikur" cache="true" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Nýr leikur">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
-      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Hætta">
+      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Hætta" onAction="#onHaetta">
          <VBox.margin>
             <Insets />
          </VBox.margin>
@@ -27,8 +27,8 @@
             <Insets />
          </VBox.margin>
       </Button>
-      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Um leikinn" />
-      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Halda áfram" />
+      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Um leikinn" onAction="#onUmForritid"/>
+      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Halda áfram" onAction="#onHaldaAfram" />
       <RadioButton minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Hljóð">
          <VBox.margin>
             <Insets left="5.0" />
