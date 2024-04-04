@@ -9,11 +9,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <?import hi.verkefni5.vidmot.Leikbord?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
             prefWidth="800.0" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="hi.verkefni5.vidmot.GoldController">
-  <fx:include source="menu-view.fxml" fx:id="menuStyring"/>
+
   <children>
     <HBox prefHeight="100.0" prefWidth="800.0" AnchorPane.bottomAnchor="530.0" AnchorPane.topAnchor="0.0">
       <children>

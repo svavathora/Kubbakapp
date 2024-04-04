@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="202.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="202.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hi.verkefni5.vidmot.ErfidleikastigController">
    <children>
       <Label alignment="CENTER" minHeight="50.0" minWidth="200.0" text="Erfiðleikastig">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <RadioButton minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Auðvelt">
+      <RadioButton fx:id="stig1" onAction="#onErfidleikastig" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Auðvelt">
+         <VBox.margin>
+            <Insets left="5.0" />
+         </VBox.margin>
+         <font>
+            <Font size="14.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="fxErfidleikastig" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="stig2" onAction="#onErfidleikastig" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Miðlungs" toggleGroup="$fxErfidleikastig">
          <VBox.margin>
             <Insets left="5.0" />
          </VBox.margin>
@@ -22,15 +31,7 @@
             <Font size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Miðlungs">
-         <VBox.margin>
-            <Insets left="5.0" />
-         </VBox.margin>
-         <font>
-            <Font size="14.0" />
-         </font>
-      </RadioButton>
-      <RadioButton minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Erfitt">
+      <RadioButton fx:id="stig3" onAction="#onErfidleikastig" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Erfitt" toggleGroup="$fxErfidleikastig">
          <VBox.margin>
             <Insets left="5.0" />
          </VBox.margin>
