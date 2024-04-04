@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="202.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" minHeight="50.0" minWidth="200.0" text="Valmynd">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Button cache="true" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Nýr leikur">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Button>
+      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Hætta">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Button>
+      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Erfiðleikastig">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Button>
+      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Hljóðstillingar" />
+      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Um leikinn" />
+      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Halda áfram" />
+   </children>
+   <padding>
+      <Insets top="7.0" />
+   </padding>
+</VBox>
