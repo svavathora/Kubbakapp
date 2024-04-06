@@ -20,8 +20,8 @@ public class Leikbord extends Pane {
      * Smiðurinn, fxml skráin lesin inn
      */
     public Leikbord() {
+        System.out.println(this.idProperty());
         FXML_Lestur.lesa(this, "leikbord-view.fxml");
-
     }
 
     /**
@@ -81,7 +81,7 @@ public class Leikbord extends Pane {
 
             // Mörkin
             double maxWidth = this.getWidth();
-            double maxHeight = 738;
+            double maxHeight = this.getHeight();
 
             // Passa mörkin
             newX = Math.max(0, Math.min(newX, maxWidth - fxGrafari.getWidth()));
@@ -135,10 +135,8 @@ public class Leikbord extends Pane {
         double gullWidth = 50.0;
         double gullHeight = 50.0;
 
-
         double maxX = this.getWidth() - gullWidth;
         double maxY = this.getHeight() - gullHeight;
-
 
         double randomX = Math.random() * maxX;
         double randomY = Math.random() * maxY;
@@ -177,13 +175,9 @@ public class Leikbord extends Pane {
      */
     public void upphafsstillaGrafara() {
         if(fxGrafari != null) {
-            fxGrafari.setLayoutX(450);
-            fxGrafari.setLayoutY(325);
+            fxGrafari.setLayoutX(this.getWidth());
+            fxGrafari.setLayoutY(this.getHeight());
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 
 }

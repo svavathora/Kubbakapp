@@ -8,20 +8,28 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import vinnsla.Klukka;
 import vinnsla.Leikur;
 
+import java.net.URL;
 import java.util.HashMap;
 
 public class GoldController {
+    //lif leikmanna
+    @FXML
+    private ImageView hjortu2;
+    @FXML
+    private ImageView hjortu1;
 
     //viðmótstilviksbreytur
 
-    @FXML
-    private ValmyndController valmyndStyringController;
+
+    //private ValmyndController valmyndStyringController;
 
     @FXML
     private Label fxStig;
@@ -30,11 +38,14 @@ public class GoldController {
     private Label fxTimi;
 
     @FXML
-    private Leikbord fxLeikbord;
+    private Leikbord fxLeikbord1;
+    @FXML
+    private Leikbord fxLeikbord2;
 
     // Býr til beinan aðgang frá KeyCode og í heiltölu. Hægt að nota til að fletta upp
     // heiltölu fyrir KeyCode
     private static final HashMap<KeyCode, Stefna> map1 = new HashMap<KeyCode, Stefna>();
+    private static final HashMap<KeyCode, Stefna> map2 = new HashMap<KeyCode, Stefna>();
 
     //final tilviksbreytur
     public static final int INTERVAL = 100;
@@ -42,10 +53,14 @@ public class GoldController {
     //tilviksbreytur
     private Klukka klukka;
     private Leikur leikur = new Leikur();
+    private Leikur leikur2 = new Leikur();
     private int timi;
     private Timeline gullTimeline; // Tímalína fyrir Animation á gullinu
     private Timeline klukkuTimeline;
     private EventHandler<KeyEvent> hreyfing;
+
+    private EventHandler<KeyEvent> hreyfing2;
+
 
     /**
      * Þegar forritið er ræst fer þetta í gang
@@ -55,18 +70,28 @@ public class GoldController {
      * Leikur hafinn og klukka ræst og stigin og tíminn eru tengd viðmót við property breytur
      */
     public void initialize() {
-        valmyndStyringController.setGoldController(this);
+        //valmyndStyringController.setGoldController(this);
 
         leikur = new Leikur();
-        fxLeikbord.setFocusTraversable(true);
-        fxLeikbord.setLeikur(leikur);
+        leikur2 = new Leikur();
+
+        fxLeikbord1.setFocusTraversable(true);
+        fxLeikbord1.setLeikur(leikur);
+        fxLeikbord2.setFocusTraversable(true);
+        fxLeikbord2.setLeikur(leikur2);
         stillaTima();
-        Platform.runLater(() -> fxLeikbord.requestFocus());
+        Platform.runLater(() -> fxLeikbord1.requestFocus());
+        Platform.runLater(() -> fxLeikbord2.requestFocus());
         stillaHreyfingu();
 
-        fxLeikbord.sceneProperty().addListener((obs, oldScene, newScene) -> {
+        fxLeikbord1.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 orvatakkar();
+            }
+        });
+        fxLeikbord2.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                orvatakkar2();
             }
         });
         hefjaLeik();
@@ -76,7 +101,8 @@ public class GoldController {
         fxTimi.textProperty().bind(Bindings.concat(klukka.getKlukkaProperty().asString(), " sek"));
 
 
-
+        hjortu1.setImage(getImage("/media/3_heart.png"));
+        hjortu2.setImage(getImage("/media/3_heart.png"));
     }
 
 
@@ -88,13 +114,26 @@ public class GoldController {
         map1.put(KeyCode.DOWN, Stefna.NIDUR);
         map1.put(KeyCode.RIGHT, Stefna.HAEGRI);
         map1.put(KeyCode.LEFT, Stefna.VINSTRI);
-
         Platform.runLater(() -> {
-            Scene scene = fxLeikbord.getScene();
+            Scene scene = fxLeikbord1.getScene();
             if (scene != null) {
                 scene.removeEventFilter(KeyEvent.ANY, hreyfing);
-                scene.addEventFilter(KeyEvent.ANY, hreyfing);
-                fxLeikbord.requestFocus();
+                scene.addEventFilter(KeyEvent.KEY_PRESSED, hreyfing);
+                fxLeikbord1.requestFocus();
+            }
+        });
+    }
+    public void orvatakkar2() {
+        map2.put(KeyCode.W, Stefna.UPP);
+        map2.put(KeyCode.S, Stefna.NIDUR);
+        map2.put(KeyCode.D, Stefna.HAEGRI);
+        map2.put(KeyCode.A, Stefna.VINSTRI);
+        Platform.runLater(() -> {
+            Scene scene = fxLeikbord2.getScene();
+            if (scene != null) {
+                scene.removeEventFilter(KeyEvent.ANY, hreyfing);
+                scene.addEventFilter(KeyEvent.KEY_PRESSED, hreyfing);
+                fxLeikbord2.requestFocus();
             }
         });
 
@@ -106,14 +145,22 @@ public class GoldController {
      * Ný tímalína búin til
      */
     public void hefjaLeik() {
-
-
         KeyFrame k = new KeyFrame(Duration.seconds(1),
                 e -> {
-                    fxLeikbord.meiraGull();
-                    }
-                );
+                    fxLeikbord1.meiraGull();
+                }
+        );
+
         gullTimeline = new Timeline(k);
+        gullTimeline.setCycleCount(Timeline.INDEFINITE);
+        gullTimeline.play();
+        KeyFrame w = new KeyFrame(Duration.seconds(1),
+                e -> {
+                    fxLeikbord2.meiraGull();
+                }
+        );
+
+        gullTimeline = new Timeline(w);
         gullTimeline.setCycleCount(Timeline.INDEFINITE);
         gullTimeline.play();
     }
@@ -172,7 +219,8 @@ public class GoldController {
             fxTimi.textProperty().unbind();
         }
         fxTimi.setText("Leik lokið");
-        fxLeikbord.stoppaLeik();
+        fxLeikbord1.stoppaLeik();
+        fxLeikbord2.stoppaLeik();
     }
 
     /**
@@ -204,12 +252,12 @@ public class GoldController {
 
         leikLokid();
 
-        fxLeikbord.clear();
-        fxLeikbord.upphafsstillaGrafara();
+        fxLeikbord1.clear();
+        fxLeikbord1.upphafsstillaGrafara();
 
         leikur = new Leikur();
-        fxLeikbord.setLeikur(leikur);
-        fxLeikbord.raesaLeik();
+        fxLeikbord1.setLeikur(leikur);
+        fxLeikbord1.raesaLeik();
 
         fxStig.textProperty().unbind();
         fxStig.setText("0");
@@ -227,11 +275,11 @@ public class GoldController {
         hefjaLeik();
 
         Platform.runLater(() -> {
-            Scene scene = fxLeikbord.getScene();
+            Scene scene = fxLeikbord1.getScene();
             if (scene != null) {
-                scene.removeEventFilter(KeyEvent.ANY, hreyfing);
-                scene.addEventFilter(KeyEvent.ANY, hreyfing);
-                fxLeikbord.requestFocus();
+                //scene.removeEventFilter(KeyEvent.ANY, hreyfing);
+                scene.addEventFilter(KeyEvent.KEY_PRESSED, hreyfing);
+                fxLeikbord1.requestFocus();
             }
         });
 
@@ -244,10 +292,24 @@ public class GoldController {
         hreyfing = event -> {
             Stefna stefna = map1.get(event.getCode());
             if (stefna != null) {
-                fxLeikbord.setStefna(stefna);
-                fxLeikbord.afram();
+
+                fxLeikbord1.setStefna(stefna);
+                fxLeikbord1.afram();
+            }
+
+            Stefna stefna2 = map2.get(event.getCode());
+            if (stefna2 != null) {
+
+                fxLeikbord2.setStefna(stefna2);
+                fxLeikbord2.afram();
             }
         };
-    }
 
+    }
+    private Image getImage(String urlS){
+        URL url = getClass().getResource(urlS);
+        assert url != null;
+        return new Image(url.toExternalForm());
+
+    }
 }
