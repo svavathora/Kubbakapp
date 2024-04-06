@@ -2,8 +2,12 @@ package hi.verkefni5.vidmot;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ErfidleikastigController {
     @FXML
@@ -21,6 +25,9 @@ public class ErfidleikastigController {
     @FXML
     private ToggleGroup fxErfidleikastig;
 
+    @FXML
+    private Button fxTilBaka;
+
     public void initialize() {
         //
     }
@@ -33,7 +40,7 @@ public class ErfidleikastigController {
     public void setGoldController(GoldController goldController) {
         this.goldController = goldController;
     }
-
+    @FXML
     public void onErfidleikastig(ActionEvent actionEvent) {
        /* if (this.goldController == null) {
             System.out.println("goldController is null when onErfidleikastig is called");
@@ -42,5 +49,13 @@ public class ErfidleikastigController {
             goldController.erfidleiki(valinnErfidleiki.getId());
         }*/
     }
+
+    @FXML
+    private void onTilBaka(ActionEvent actionEvent) throws IOException {
+        Stage nuverandiStage = (Stage) fxTilBaka.getScene().getWindow();
+        nuverandiStage.close();
+    }
+
+
 
 }

@@ -2,7 +2,12 @@ package hi.verkefni5.vidmot;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ValmyndController {
 
@@ -12,6 +17,9 @@ public class ValmyndController {
 
     @FXML
     private MenuItem fxBreyta;
+
+    @FXML
+    private Button fxAfram;
 
     //togglegroup
     private ToggleGroup erfidleikastig = new ToggleGroup();
@@ -30,7 +38,13 @@ public class ValmyndController {
 
     @FXML
     private void onHaldaAfram(){
-        goldController.resume();
+        if(this.goldController == null){
+            System.out.println("GoldController er null");
+            fxAfram.setText("Enginn leikur í gangi");
+        }
+        else {
+            goldController.resume();
+        }
     }
 
 
@@ -75,6 +89,18 @@ public class ValmyndController {
         alert.showAndWait();
     }
 
+    @FXML
+    private void onErfidleikastig() throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(GoldApplication.class.getResource("erfidleikastig-view.fxml"));
+        //FXML_Lestur.lesa(this,"erfidleikastig-view.fxml"); -skil ekki alveg hvernig þú notar þetta en 100% hægt að nota frekar
+        //til að gera þetta betri kóða, notaði líka í hinu verkefninu en fæ ekki til að virka núna -sunna
+        //því er með öðruvísi fxml, var líka að hugsa með ViewSwitcher og View eins og í AudioPlayer en var líka smá skrýtið
+        Scene scene = new Scene(fxmlLoader.load(), 210, 280);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     /**
      * setter
      * @param goldController
@@ -86,6 +112,7 @@ public class ValmyndController {
     public static void main(String[] args) {
 
     }
+
 }
 
 

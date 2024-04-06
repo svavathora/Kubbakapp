@@ -22,13 +22,13 @@
             <Insets />
          </VBox.margin>
       </Button>
-      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Erfiðleikastig">
+      <Button fx:id="fxErfidleiki" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Erfiðleikastig" onAction="#onErfidleikastig">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
       <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Um leikinn" onAction="#onUmForritid"/>
-      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Halda áfram" onAction="#onHaldaAfram" />
+      <Button fx:id="fxAfram" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Halda áfram" onAction="#onHaldaAfram" />
       <RadioButton minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Hljóð">
          <VBox.margin>
             <Insets left="5.0" />
