@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import vinnsla.Klukka;
 import vinnsla.Leikur;
@@ -28,11 +29,15 @@ public class GoldController {
 
     //viðmótstilviksbreytur
 
-
     //private ValmyndController valmyndStyringController;
 
     @FXML
     private Label fxStig;
+
+    @FXML
+    private Label fxStig2;
+
+
 
     @FXML
     private Label fxTimi;
@@ -57,9 +62,18 @@ public class GoldController {
     private int timi;
     private Timeline gullTimeline; // Tímalína fyrir Animation á gullinu
     private Timeline klukkuTimeline;
+    private Timeline sprengjuTimeline;
     private EventHandler<KeyEvent> hreyfing;
 
     private EventHandler<KeyEvent> hreyfing2;
+
+
+
+    @FXML
+    private Pane leikbordContainer1; // A container in your FXML for player 1's Leikbord
+
+    @FXML
+    private Pane leikbordContainer2; // A container for player 2's Leikbord
 
 
     /**
@@ -96,6 +110,10 @@ public class GoldController {
         });
         hefjaLeik();
         fxStig.textProperty().bind(Bindings.concat("Stig: ", leikur.getStigProperty().asString()));
+        fxStig2.textProperty().bind(Bindings.concat("Stig: ", leikur2.getStigProperty().asString()));
+
+        leikur.getLifProperty().addListener((obs, oldVal, newVal) -> uppfaeraMynd(newVal.intValue()));
+        leikur2.getLifProperty().addListener((obs, oldVal, newVal) -> uppfaeraMynd2(newVal.intValue()));
 
         raesaKlukku();
         fxTimi.textProperty().bind(Bindings.concat(klukka.getKlukkaProperty().asString(), " sek"));
@@ -104,6 +122,8 @@ public class GoldController {
         hjortu1.setImage(getImage("/media/3_heart.png"));
         hjortu2.setImage(getImage("/media/3_heart.png"));
     }
+
+
 
 
     /**
@@ -150,19 +170,36 @@ public class GoldController {
                     fxLeikbord1.meiraGull();
                 }
         );
+        KeyFrame k2 = new KeyFrame(Duration.seconds(5),
+                e -> {
+                    fxLeikbord1.meiriSprengjur();
+                }
+        );
 
         gullTimeline = new Timeline(k);
         gullTimeline.setCycleCount(Timeline.INDEFINITE);
         gullTimeline.play();
+        sprengjuTimeline = new Timeline(k2);
+        sprengjuTimeline.setCycleCount(Timeline.INDEFINITE);
+        sprengjuTimeline.play();
+
         KeyFrame w = new KeyFrame(Duration.seconds(1),
                 e -> {
                     fxLeikbord2.meiraGull();
+                }
+        );
+        KeyFrame w2 = new KeyFrame(Duration.seconds(5),
+                e -> {
+                    fxLeikbord2.meiriSprengjur();
                 }
         );
 
         gullTimeline = new Timeline(w);
         gullTimeline.setCycleCount(Timeline.INDEFINITE);
         gullTimeline.play();
+        sprengjuTimeline = new Timeline(w2);
+        sprengjuTimeline.setCycleCount(Timeline.INDEFINITE);
+        sprengjuTimeline.play();
     }
 
 
@@ -206,6 +243,7 @@ public class GoldController {
      * klukkan og leikurinn stoppaður
      */
     private void leikLokid() {
+        System.out.println("Leik lokið");
         if (gullTimeline != null) {
             gullTimeline.stop();
         }
@@ -312,4 +350,25 @@ public class GoldController {
         return new Image(url.toExternalForm());
 
     }
+
+
+
+    private void uppfaeraMynd(int lif) {
+        String url = "/media/"+lif+"_heart.png";
+        Image mynd = new Image(getClass().getResourceAsStream(url));
+        hjortu1.setImage(mynd);
+        if(leikur.getLif() == 0) {
+            leikLokid();
+        }
+    }
+
+    private void uppfaeraMynd2(int lif) {
+        String url = "/media/"+lif+"_heart.png";
+        Image mynd = new Image(getClass().getResourceAsStream(url));
+        hjortu2.setImage(mynd);
+        if(leikur2.getLif() == 0) {
+            leikLokid();
+        }
+    }
+
 }

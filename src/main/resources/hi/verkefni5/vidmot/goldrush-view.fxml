@@ -112,7 +112,7 @@
                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                           AnchorPane.topAnchor="50.0">
                       <children>
-                        <Label prefHeight="50.0" prefWidth="152.0" text="Stig: ">
+                        <Label fx:id="fxStig2" prefHeight="50.0" prefWidth="152.0" text="Stig: ">
                           <font>
                             <Font size="14.0"/>
                           </font>

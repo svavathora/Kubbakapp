@@ -32,13 +32,11 @@ public class NyrLeikurController {
     public void onByrjaLeik(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(GoldApplication.class.getResource("goldrush-view.fxml"));
-<<<<<<< HEAD
         //FXML_Lestur.lesa(this,"goldrush-view.fxml"); -skil ekki alveg hvernig þú notar þetta en 100% hægt að nota frekar
         //til að gera þetta betri kóða -sunna
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
-=======
+        //Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
+
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
->>>>>>> bd96afe4b1dacc7db39f7ea518b97967d356f00a
         stage.setTitle("KubbaKapp");
         stage.setScene(scene);
         stage.show();
