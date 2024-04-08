@@ -4,14 +4,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import vinnsla.DifficultyModel;
 
 import java.io.IOException;
 
 public class ErfidleikastigController {
+
     @FXML
-    private GoldController goldController;
+    private ToggleGroup fxErfidleikastig;
+
+    @FXML
+    private Button fxTilBaka;
 
     @FXML
     private RadioButton stig1;
@@ -22,32 +28,40 @@ public class ErfidleikastigController {
     @FXML
     private RadioButton stig3;
 
-    @FXML
-    private ToggleGroup fxErfidleikastig;
+    private DifficultyModel difficultyModel = DifficultyModel.getInstance();
+
+    public void setDifficultyModel(DifficultyModel model) {
+        this.difficultyModel = model;
+        //initialize(); // Re-initialize to update based on model
+    }
 
     @FXML
-    private Button fxTilBaka;
+    private void onErfidleikastig() {
+        DifficultyModel difficultyModel = DifficultyModel.getInstance();
+        Toggle selectedToggle = fxErfidleikastig.getSelectedToggle();
+        if (selectedToggle != null) {
+            RadioButton selectedRadioButton = (RadioButton) selectedToggle;
+            difficultyModel.setDifficulty(selectedRadioButton.getText());
+        }
+    }
 
+    @FXML
     public void initialize() {
-        //
-    }
-
-    //@FXML
-    /*private void onErfidleikastig() {
-        RadioMenuItem validItem = (RadioMenuItem) fxErfidleikastig.getSelectedToggle();
-    }*/
-
-    public void setGoldController(GoldController goldController) {
-        this.goldController = goldController;
-    }
-    @FXML
-    public void onErfidleikastig(ActionEvent actionEvent) {
-       /* if (this.goldController == null) {
-            System.out.println("goldController is null when onErfidleikastig is called");
-        } else {
-            RadioMenuItem valinnErfidleiki = ((RadioMenuItem) fxErfidleikastig.getSelectedToggle());
-            goldController.erfidleiki(valinnErfidleiki.getId());
-        }*/
+        String currentDifficulty = DifficultyModel.getInstance().getDifficulty();
+        switch (currentDifficulty) {
+            case "Auðvelt":
+                stig1.setSelected(true);
+                break;
+            case "Miðlungs":
+                stig2.setSelected(true);
+                break;
+            case "Erfitt":
+                stig3.setSelected(true);
+                break;
+            default:
+                // Handle default case or throw an error
+                break;
+        }
     }
 
     @FXML
@@ -55,7 +69,6 @@ public class ErfidleikastigController {
         Stage nuverandiStage = (Stage) fxTilBaka.getScene().getWindow();
         nuverandiStage.close();
     }
-
 
 
 }

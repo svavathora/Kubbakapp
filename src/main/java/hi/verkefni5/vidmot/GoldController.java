@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import vinnsla.DifficultyModel;
 import vinnsla.Klukka;
 import vinnsla.Leikur;
 
@@ -30,6 +31,8 @@ public class GoldController {
     //viðmótstilviksbreytur
 
     //private ValmyndController valmyndStyringController;
+
+    private ErfidleikastigController erfidleikastigController = new ErfidleikastigController();
 
     @FXML
     private Label fxStig;
@@ -67,13 +70,15 @@ public class GoldController {
 
     private EventHandler<KeyEvent> hreyfing2;
 
-
+    private DifficultyModel difficultyModel = DifficultyModel.getInstance();
 
     @FXML
     private Pane leikbordContainer1; // A container in your FXML for player 1's Leikbord
 
     @FXML
     private Pane leikbordContainer2; // A container for player 2's Leikbord
+
+
 
 
     /**
@@ -86,6 +91,12 @@ public class GoldController {
     public void initialize() {
         //valmyndStyringController.setGoldController(this);
 
+        difficultyModel.difficultyProperty().addListener((obs, oldDifficulty, newDifficulty) -> {
+            // Respond to difficulty change
+            System.out.println("New difficulty is: " + newDifficulty);
+            // Update game settings based on the new difficulty
+        });
+
         leikur = new Leikur();
         leikur2 = new Leikur();
 
@@ -93,7 +104,11 @@ public class GoldController {
         fxLeikbord1.setLeikur(leikur);
         fxLeikbord2.setFocusTraversable(true);
         fxLeikbord2.setLeikur(leikur2);
-        stillaTima();
+        //String timi = erfidleikastigController.getSelectedDifficulty();
+        //stillaTima(timi);
+        //stillaTima("Erfitt");
+        String timi = difficultyModel.getDifficulty(); // Use the shared model
+        stillaTima(timi);
         Platform.runLater(() -> fxLeikbord1.requestFocus());
         Platform.runLater(() -> fxLeikbord2.requestFocus());
         stillaHreyfingu();
@@ -121,6 +136,7 @@ public class GoldController {
 
         hjortu1.setImage(getImage("/media/3_heart.png"));
         hjortu2.setImage(getImage("/media/3_heart.png"));
+
     }
 
 
@@ -264,13 +280,13 @@ public class GoldController {
     /**
      * Tíminn fyrir klukkunu er upphafsstilltur eftir því erfiðleikastigi sem er valið
      */
-    private void stillaTima() {
-        /*this.timi = switch (menuStyringController.getRadioMenuItem().getText()) {
-            case "Létt" -> 30;
+    private void stillaTima(String texti) {
+        this.timi = switch (texti) {
+            case "Auðvelt" -> 30;
             case "Miðlungs" -> 25;
             case "Erfitt" -> 20;
             default -> 0;
-        };*/
+        };
     }
 
     public void resume(){//halda áfram með leik úr valmynd-sunna
@@ -300,7 +316,7 @@ public class GoldController {
         fxStig.textProperty().unbind();
         fxStig.setText("0");
         fxStig.textProperty().bind(Bindings.concat("Stig: ", leikur.getStigProperty().asString()));
-        stillaTima();
+        stillaTima("Auðvelt");
 
         klukka.endurstillaTima(this.timi);
         klukka = new Klukka(timi);

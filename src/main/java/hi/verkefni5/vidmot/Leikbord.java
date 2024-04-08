@@ -108,11 +108,8 @@ public class Leikbord extends Pane {
             }
 
             if (erRekstASprengju()) {
-                //breyta mynd
                 System.out.println("breyti mynd um líf"+this.leikur);
-                //hjortu1.setImage(getImage("/media/3_heart.png"));
                 leikur.laekkaLif();
-                //goldController.missaLif();
                 sprengjuArekstur();
             }
         }
@@ -243,8 +240,6 @@ public class Leikbord extends Pane {
             if (fxGrafari.getBoundsInParent().intersects(sprengja.getBoundsInParent())) {
                 getChildren().remove(sprengja);
                 sprengjuListi.remove(sprengja);
-                //sprengjur.laekkaLif(this.playerID);
-                //goldController.missaLif(this.playerID);
                 break;
             }
         }
