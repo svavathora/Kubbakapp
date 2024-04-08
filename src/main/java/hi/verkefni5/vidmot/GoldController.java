@@ -13,8 +13,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import vinnsla.DifficultyModel;
+import vinnsla.Hljodstillingar;
 import vinnsla.Klukka;
 import vinnsla.Leikur;
 
@@ -32,19 +35,16 @@ public class GoldController {
 
     //private ValmyndController valmyndStyringController;
 
+    private MediaPlayer mediaPlayer;
+
     private ErfidleikastigController erfidleikastigController = new ErfidleikastigController();
 
     @FXML
     private Label fxStig;
-
     @FXML
     private Label fxStig2;
-
-
-
     @FXML
     private Label fxTimi;
-
     @FXML
     private Leikbord fxLeikbord1;
     @FXML
@@ -72,6 +72,8 @@ public class GoldController {
 
     private DifficultyModel difficultyModel = DifficultyModel.getInstance();
 
+    private Hljodstillingar hljodstillingar = Hljodstillingar.getHljodstillingar();
+
     @FXML
     private Pane leikbordContainer1; // A container in your FXML for player 1's Leikbord
 
@@ -97,6 +99,14 @@ public class GoldController {
             // Update game settings based on the new difficulty
         });
 
+        hljodstillingar.hljodKveiktProperty().addListener((obs, varKveikt, erKveikt) -> {
+            if (erKveikt) {
+                spilaLag();
+            } else {
+                stoppaLag();
+            }
+        });
+
         leikur = new Leikur();
         leikur2 = new Leikur();
 
@@ -104,11 +114,12 @@ public class GoldController {
         fxLeikbord1.setLeikur(leikur);
         fxLeikbord2.setFocusTraversable(true);
         fxLeikbord2.setLeikur(leikur2);
-        //String timi = erfidleikastigController.getSelectedDifficulty();
-        //stillaTima(timi);
-        //stillaTima("Erfitt");
         String timi = difficultyModel.getDifficulty(); // Use the shared model
         stillaTima(timi);
+
+
+
+        spilaLag();
         Platform.runLater(() -> fxLeikbord1.requestFocus());
         Platform.runLater(() -> fxLeikbord2.requestFocus());
         stillaHreyfingu();
@@ -384,6 +395,33 @@ public class GoldController {
         hjortu2.setImage(mynd);
         if(leikur2.getLif() == 0) {
             leikLokid();
+        }
+    }
+
+    public void spilaLag() {
+        if (!hljodstillingar.erHljodKveikt()) {
+            return; // Don't play if sound is disabled
+        }
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose();
+        }
+        URL mediaUrl = getClass().getResource("/media/lag.mp3");
+        if (mediaUrl != null) {
+            Media media = new Media(mediaUrl.toExternalForm());
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            //mediaPlayer.setStopTime(new Duration(this.timi * 1000));
+            mediaPlayer.play();
+        } else {
+            System.err.println("Skráin fannst ekki: media/lag.mp3");
+        }
+    }
+
+    public void stoppaLag() {
+        if(mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose();
         }
     }
 

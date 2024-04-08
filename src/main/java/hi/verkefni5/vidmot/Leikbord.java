@@ -239,8 +239,9 @@ public class Leikbord extends Pane {
         for (Sprengja sprengja : sprengjuListi) {
             if (fxGrafari.getBoundsInParent().intersects(sprengja.getBoundsInParent())) {
                 //Sprengju animation
+                System.out.println("sprengjuhljoð");
+                sprengja.spilaHljod();
                 sprengja.boom();
-
                 sprengjuListi.remove(sprengja);
                 break;
             }
