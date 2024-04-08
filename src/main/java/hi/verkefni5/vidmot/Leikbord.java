@@ -241,7 +241,9 @@ public class Leikbord extends Pane {
     private void sprengjuArekstur() {
         for (Sprengja sprengja : sprengjuListi) {
             if (fxGrafari.getBoundsInParent().intersects(sprengja.getBoundsInParent())) {
-                getChildren().remove(sprengja);
+                //Sprengju animation
+                sprengja.boom();
+
                 sprengjuListi.remove(sprengja);
                 //sprengjur.laekkaLif(this.playerID);
                 //goldController.missaLif(this.playerID);
