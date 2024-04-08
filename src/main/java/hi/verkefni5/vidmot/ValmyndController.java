@@ -18,14 +18,13 @@ public class ValmyndController {
     //viðmótstilviksbreytur
 
 
-    private GoldController goldController;
+    private KubbaKappController kubbaKappController;
 
     @FXML
     private MenuItem fxBreyta;
 
     @FXML
     private Button fxAfram;
-
 
 
     //togglegroup
@@ -53,24 +52,24 @@ public class ValmyndController {
      */
     @FXML
     private void onNyrLeikur() {
-        goldController.endurraesa();
+        kubbaKappController.endurraesa();
     }
 
 
     @FXML
-    private void onHaldaAfram(){
-        if(this.goldController == null){
-            System.out.println("GoldController er null");
+    private void onHaldaAfram() {
+        if (this.kubbaKappController == null) {
+            System.out.println("KubbaKappController er null");
             fxAfram.setText("Enginn leikur í gangi");
-        }
-        else {
-            goldController.resume();
+        } else {
+            kubbaKappController.resume();
         }
     }
 
 
     /**
-     *Alert dialog sem spyr hvort notandinn vilji hætta leik
+     * Alert dialog sem spyr hvort notandinn vilji hætta leik
+     *
      * @param actionEvent ýtt á hætta
      */
     @FXML
@@ -94,22 +93,27 @@ public class ValmyndController {
 
     /**
      * Alert dialog sem segir notanda frá forritinu
+     *
      * @param actionEvent ýtt á um forritið
      */
     @FXML
     private void onUmForritid(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Um forritið");
-        alert.setHeaderText("Gullgrafaraleikur");
-        alert.setContentText("Hreyfðu gullgrafarann og grafðu eftir gulli til að safna stigum. \n" +
-                "Hægt er að stilla erfiðleikastig undir \"Breyta\". \n" +
-                "Hægt er að hefja nýjan leik eða hætta undir \"Skrá\". \n" +
+        alert.setHeaderText("KubbaKapp");
+        alert.setContentText("KubbaKapp er leikur þar sem tveir leikmenn keppast um að safna stigum á vissum tíma. \n" +
+                "Tíminn fer eftir erfileikastigi (létt, miðlungs, erfitt) sem hægt er að velja í stillingum. \n" +
+                "Hafa skal varann á sprengjum sem birtast af og til, ef leikmaður rekst á sprengju missir hann 1 af 3 lífum. " +
+                "Ef öll líf klárast tapar sá hin sami leiknum. \n" + "Stig eru söfnuð með að ná kubbum, sem líkt og sprengjurnar birtast á leikskjánnum. \n" +
+                "\n" + "Þegar sigri er náð birtist gluggi sem hefur valmöguleika á að hefja nýjan leik eða hætta.\n" +
+                " \n" +
                 "KubbaKappar smíðuðu þetta forrit.");
         alert.showAndWait();
     }
 
     /**
      * Birtir erfiðleikastigsvalmyndina og setur valið erfiðleikastig sem erfiðleikastigið í erfiðleikastigControllernum
+     *
      * @throws IOException
      */
     @FXML
@@ -126,10 +130,11 @@ public class ValmyndController {
 
     /**
      * setter
-     * @param goldController
+     *
+     * @param kubbaKappController
      */
-    public void setGoldController(GoldController goldController) {
-        this.goldController = goldController;
+    public void setGoldController(KubbaKappController kubbaKappController) {
+        this.kubbaKappController = kubbaKappController;
         Hljodstillingar.getHljodstillingar().kveikjaAHljodi(fxHljod.isSelected());
     }
 

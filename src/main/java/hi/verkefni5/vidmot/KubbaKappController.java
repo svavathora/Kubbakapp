@@ -28,7 +28,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Optional;
 
-public class GoldController {
+public class KubbaKappController {
     //lif leikmanna
     @FXML
     private ImageView hjortu2;
@@ -85,8 +85,6 @@ public class GoldController {
     private Pane leikbordContainer2; // A container for player 2's Leikbord
 
 
-
-
     /**
      * Þegar forritið er ræst fer þetta í gang
      * Leikborðið er vikrjað og leikur stilltur fyrir það
@@ -122,7 +120,6 @@ public class GoldController {
         stillaTima(timi);
 
 
-
         spilaLag();
         Platform.runLater(() -> fxLeikbord1.requestFocus());
         Platform.runLater(() -> fxLeikbord2.requestFocus());
@@ -155,8 +152,6 @@ public class GoldController {
     }
 
 
-
-
     /**
      * Orvatakkarnir stilltir og tengdir við leikborðið
      */
@@ -174,6 +169,7 @@ public class GoldController {
             }
         });
     }
+
     public void orvatakkar2() {
         map2.put(KeyCode.W, Stefna.UPP);
         map2.put(KeyCode.S, Stefna.NIDUR);
@@ -239,7 +235,7 @@ public class GoldController {
      * Ný tímalína fer í gang sem er stöðvuð þegar tíminn er búinn og þá er kallað á leiklokið
      * Tímalínurnar keyrðar
      */
-    public void raesaKlukku () {
+    public void raesaKlukku() {
         klukka = new Klukka(this.timi);
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(INTERVAL),
@@ -264,7 +260,6 @@ public class GoldController {
                 leikLokid();
             }
         });
-
 
 
     }
@@ -307,7 +302,7 @@ public class GoldController {
         };
     }
 
-    public void resume(){//halda áfram með leik úr valmynd-sunna
+    public void resume() {//halda áfram með leik úr valmynd-sunna
         gullTimeline.play();
     }
 
@@ -380,10 +375,11 @@ public class GoldController {
 
     /**
      * Getter fyrir mynd
+     *
      * @param urlS url myndarinnar
      * @return myndinni skilað
      */
-    private Image getImage(String urlS){
+    private Image getImage(String urlS) {
         URL url = getClass().getResource(urlS);
         assert url != null;
         return new Image(url.toExternalForm());
@@ -393,26 +389,28 @@ public class GoldController {
 
     /**
      * Hjörtu leikmanns 1 eru uppfærð
+     *
      * @param lif fjöldi lífa sem leikmaður á eftir
      */
     private void uppfaeraMynd(int lif) {
-        String url = "/media/"+lif+"_heart.png";
+        String url = "/media/" + lif + "_heart.png";
         Image mynd = new Image(getClass().getResourceAsStream(url));
         hjortu1.setImage(mynd);
-        if(leikur.getLif() == 0) {
+        if (leikur.getLif() == 0) {
             leikLokid();
         }
     }
 
     /**
      * Hjörtu leikmanns 2 eru uppfærð
+     *
      * @param lif fjöldi lífa sem leikmaður á eftir
      */
     private void uppfaeraMynd2(int lif) {
-        String url = "/media/"+lif+"_heart.png";
+        String url = "/media/" + lif + "_heart.png";
         Image mynd = new Image(getClass().getResourceAsStream(url));
         hjortu2.setImage(mynd);
-        if(leikur2.getLif() == 0) {
+        if (leikur2.getLif() == 0) {
             leikLokid();
         }
     }
@@ -445,7 +443,7 @@ public class GoldController {
      * Lagið er stoppað
      */
     public void stoppaLag() {
-        if(mediaPlayer != null) {
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.dispose();
         }
@@ -460,13 +458,11 @@ public class GoldController {
         int stig2 = leikur2.getStig();
 
         String tilkynning;
-        if(leikur.getLif() == 0) {
+        if (leikur.getLif() == 0) {
             tilkynning = "Leikmaður 1 vinnur";
-        }
-        else if(leikur2.getLif() == 0) {
+        } else if (leikur2.getLif() == 0) {
             tilkynning = "Leikmaður 2 vinnur";
-        }
-        else if (stig1 > stig2) {
+        } else if (stig1 > stig2) {
             tilkynning = "Leikmaður 2 vinnur með " + stig1 + " stig!";
         } else if (stig2 > stig1) {
             tilkynning = "Leikmaður 1 vinnur með " + stig2 + " stig!";
