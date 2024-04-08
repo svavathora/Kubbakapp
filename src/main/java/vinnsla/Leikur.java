@@ -4,8 +4,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Leikur {
 
-    //porperty tilviksbreyta
+    //porperty tilviksbreytur
     private  SimpleIntegerProperty stig = new SimpleIntegerProperty(0);
+
+    private SimpleIntegerProperty lif = new SimpleIntegerProperty(3);
 
     /**
      * getter fyrir stig
@@ -25,7 +27,7 @@ public class Leikur {
 
     /**
      * getter fyrir stig
-     * @return
+     * @return stig
      */
     public SimpleIntegerProperty getStigProperty() {
         return stig;
@@ -39,6 +41,22 @@ public class Leikur {
     }
 
 
+    /**
+     * Getter fyrir líf
+     * @return líf
+     */
+    public final int getLif() {return lif.get();}
+
+    /**
+     * Lífin lækkuð um einn
+     */
+    public void laekkaLif() {
+        this.lif.set(this.getLif()-1);
+    }
+
+    public SimpleIntegerProperty getLifProperty() {
+        return lif;
+    }
 
     public static void main(String[] args) {
 

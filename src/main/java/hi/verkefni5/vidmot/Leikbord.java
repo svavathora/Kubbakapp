@@ -8,21 +8,30 @@ import vinnsla.Leikur;
 
 public class Leikbord extends Pane {
 
+
     //tilviksbreytur
     private Leikur leikur;
     private boolean leikurIGangi = true;
     private ObservableList<Gull> gullListi = FXCollections.observableArrayList();
+    private ObservableList<Sprengja> sprengjuListi = FXCollections.observableArrayList();
 
     @FXML
     private Grafari fxGrafari;
+
+    private GoldController goldController;
+
+
+
 
     /**
      * Smiðurinn, fxml skráin lesin inn
      */
     public Leikbord() {
+        System.out.println(this.idProperty());
         FXML_Lestur.lesa(this, "leikbord-view.fxml");
-
     }
+
+
 
     /**
      * Setter fyrir leik
@@ -47,6 +56,9 @@ public class Leikbord extends Pane {
      * @param stefna stefna
      */
     public void setStefna(Stefna stefna) {
+        if(!leikurIGangi) {
+            return;
+        }
         fxGrafari.setStefna(stefna);
         afram();
     }
@@ -81,7 +93,7 @@ public class Leikbord extends Pane {
 
             // Mörkin
             double maxWidth = this.getWidth();
-            double maxHeight = 738;
+            double maxHeight = this.getHeight();
 
             // Passa mörkin
             newX = Math.max(0, Math.min(newX, maxWidth - fxGrafari.getWidth()));
@@ -93,6 +105,15 @@ public class Leikbord extends Pane {
             if (erGrefurGull()) {
                 leikur.haekkaStig();
                 arekstur();
+            }
+
+            if (erRekstASprengju()) {
+                //breyta mynd
+                System.out.println("breyti mynd um líf"+this.leikur);
+                //hjortu1.setImage(getImage("/media/3_heart.png"));
+                leikur.laekkaLif();
+                //goldController.missaLif();
+                sprengjuArekstur();
             }
         }
     }
@@ -135,10 +156,8 @@ public class Leikbord extends Pane {
         double gullWidth = 50.0;
         double gullHeight = 50.0;
 
-
         double maxX = this.getWidth() - gullWidth;
         double maxY = this.getHeight() - gullHeight;
-
 
         double randomX = Math.random() * maxX;
         double randomY = Math.random() * maxY;
@@ -170,6 +189,8 @@ public class Leikbord extends Pane {
     public void clear() {
         getChildren().removeIf(node -> node instanceof Gull);
         gullListi.clear();
+        getChildren().removeIf(node -> node instanceof Sprengja);
+        sprengjuListi.clear();
     }
 
     /**
@@ -177,13 +198,70 @@ public class Leikbord extends Pane {
      */
     public void upphafsstillaGrafara() {
         if(fxGrafari != null) {
-            fxGrafari.setLayoutX(450);
-            fxGrafari.setLayoutY(325);
+            fxGrafari.setLayoutX(this.getWidth());
+            fxGrafari.setLayoutY(this.getHeight());
         }
     }
 
-    public static void main(String[] args) {
-
+    /**
+     *
+     */
+    public void meiriSprengjur() {
+        if(!leikurIGangi) {
+            return;
+        }
+        framleidaSprengju();
     }
+
+    /**
+     * Ný sprengja er búin til og birt á slembnum stað, henni er bætt í observable listann
+     */
+    private void framleidaSprengju() {
+        Sprengja s = new Sprengja();
+
+        double sprengjaWidth = 50.0;
+        double sprengjaHeight = 50.0;
+
+        double maxX = this.getWidth() - sprengjaWidth;
+        double maxY = this.getHeight() - sprengjaHeight;
+
+        double randomX = Math.random() * maxX;
+        double randomY = Math.random() * maxY;
+
+        s.setLayoutX(randomX);
+        s.setLayoutY(randomY);
+
+        this.getChildren().add(s);
+        sprengjuListi.add(s);
+    }
+
+    /**
+     * Fjarlægir sprengju ef grafarinn klessir á hana
+     */
+    private void sprengjuArekstur() {
+        for (Sprengja sprengja : sprengjuListi) {
+            if (fxGrafari.getBoundsInParent().intersects(sprengja.getBoundsInParent())) {
+                getChildren().remove(sprengja);
+                sprengjuListi.remove(sprengja);
+                //sprengjur.laekkaLif(this.playerID);
+                //goldController.missaLif(this.playerID);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Athugað hvort grafari klessi á sprengju
+     * @return true ef grafari er að klessa á sprengju, annars false
+     */
+    public boolean erRekstASprengju() {
+        for (Sprengja sprengja : sprengjuListi) {
+            if (fxGrafari.getBoundsInParent().intersects(sprengja.getBoundsInParent())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
