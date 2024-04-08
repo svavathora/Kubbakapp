@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class GoldApplication extends Application {
+
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -18,9 +19,5 @@ public class GoldApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }

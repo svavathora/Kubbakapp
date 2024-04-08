@@ -6,13 +6,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import vinnsla.DifficultyModel;
+import vinnsla.Hljodstillingar;
 
 import java.io.IOException;
 
 public class ValmyndController {
 
-    //viðmótstilviksbreytur
     @FXML
+    public RadioButton fxHljod;
+    //viðmótstilviksbreytur
+
+
     private GoldController goldController;
 
     @FXML
@@ -21,8 +26,23 @@ public class ValmyndController {
     @FXML
     private Button fxAfram;
 
+
+
     //togglegroup
     private ToggleGroup erfidleikastig = new ToggleGroup();
+
+    //tilviksbreyta fyrir klasann
+    private DifficultyModel difficultyModel;
+
+
+    /**
+     * Þegar valmyndin er opnuð er kveikt á listener á milli fxHljod takkans og hljóðsins í Hljóðstillingaklasanum
+     */
+    public void initialize() {
+        fxHljod.selectedProperty().addListener((obs, varValid, erValid) -> {
+            Hljodstillingar.getHljodstillingar().kveikjaAHljodi(erValid);
+        });
+    }
 
     /**
      * Þegar erfiðleikastig er valið
@@ -35,6 +55,7 @@ public class ValmyndController {
     private void onNyrLeikur() {
         goldController.endurraesa();
     }
+
 
     @FXML
     private void onHaldaAfram(){
@@ -83,21 +104,23 @@ public class ValmyndController {
         alert.setContentText("Hreyfðu gullgrafarann og grafðu eftir gulli til að safna stigum. \n" +
                 "Hægt er að stilla erfiðleikastig undir \"Breyta\". \n" +
                 "Hægt er að hefja nýjan leik eða hætta undir \"Skrá\". \n" +
-                "Svava Þóra smíðaði þetta forrit.");
-
-
+                "KubbaKappar smíðuðu þetta forrit.");
         alert.showAndWait();
     }
 
+    /**
+     * Birtir erfiðleikastigsvalmyndina og setur valið erfiðleikastig sem erfiðleikastigið í erfiðleikastigControllernum
+     * @throws IOException
+     */
     @FXML
     private void onErfidleikastig() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("erfidleikastig-view.fxml"));
         Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(GoldApplication.class.getResource("erfidleikastig-view.fxml"));
-        //FXML_Lestur.lesa(this,"erfidleikastig-view.fxml"); -skil ekki alveg hvernig þú notar þetta en 100% hægt að nota frekar
-        //til að gera þetta betri kóða, notaði líka í hinu verkefninu en fæ ekki til að virka núna -sunna
-        //því er með öðruvísi fxml, var líka að hugsa með ViewSwitcher og View eins og í AudioPlayer en var líka smá skrýtið
-        Scene scene = new Scene(fxmlLoader.load(), 210, 280);
-        stage.setScene(scene);
+        stage.setScene(new Scene(fxmlLoader.load()));
+
+        ErfidleikastigController erfidleikastigController = fxmlLoader.getController();
+        erfidleikastigController.setDifficultyModel(this.difficultyModel);
+
         stage.show();
     }
 
@@ -107,6 +130,7 @@ public class ValmyndController {
      */
     public void setGoldController(GoldController goldController) {
         this.goldController = goldController;
+        Hljodstillingar.getHljodstillingar().kveikjaAHljodi(fxHljod.isSelected());
     }
 
     public static void main(String[] args) {

@@ -7,18 +7,26 @@ import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import vinnsla.DifficultyModel;
+import vinnsla.Hljodstillingar;
 import vinnsla.Klukka;
 import vinnsla.Leikur;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class GoldController {
     //lif leikmanna
@@ -31,17 +39,16 @@ public class GoldController {
 
     //private ValmyndController valmyndStyringController;
 
+    private MediaPlayer mediaPlayer;
+
+    private ErfidleikastigController erfidleikastigController = new ErfidleikastigController();
+
     @FXML
     private Label fxStig;
-
     @FXML
     private Label fxStig2;
-
-
-
     @FXML
     private Label fxTimi;
-
     @FXML
     private Leikbord fxLeikbord1;
     @FXML
@@ -67,13 +74,17 @@ public class GoldController {
 
     private EventHandler<KeyEvent> hreyfing2;
 
+    private DifficultyModel difficultyModel = DifficultyModel.getInstance();
 
+    private Hljodstillingar hljodstillingar = Hljodstillingar.getHljodstillingar();
 
     @FXML
     private Pane leikbordContainer1; // A container in your FXML for player 1's Leikbord
 
     @FXML
     private Pane leikbordContainer2; // A container for player 2's Leikbord
+
+
 
 
     /**
@@ -86,6 +97,20 @@ public class GoldController {
     public void initialize() {
         //valmyndStyringController.setGoldController(this);
 
+        difficultyModel.difficultyProperty().addListener((obs, oldDifficulty, newDifficulty) -> {
+            // Respond to difficulty change
+            System.out.println("New difficulty is: " + newDifficulty);
+            // Update game settings based on the new difficulty
+        });
+
+        hljodstillingar.hljodKveiktProperty().addListener((obs, varKveikt, erKveikt) -> {
+            if (erKveikt) {
+                spilaLag();
+            } else {
+                stoppaLag();
+            }
+        });
+
         leikur = new Leikur();
         leikur2 = new Leikur();
 
@@ -93,7 +118,12 @@ public class GoldController {
         fxLeikbord1.setLeikur(leikur);
         fxLeikbord2.setFocusTraversable(true);
         fxLeikbord2.setLeikur(leikur2);
-        stillaTima();
+        String timi = difficultyModel.getDifficulty(); // Use the shared model
+        stillaTima(timi);
+
+
+
+        spilaLag();
         Platform.runLater(() -> fxLeikbord1.requestFocus());
         Platform.runLater(() -> fxLeikbord2.requestFocus());
         stillaHreyfingu();
@@ -121,6 +151,7 @@ public class GoldController {
 
         hjortu1.setImage(getImage("/media/3_heart.png"));
         hjortu2.setImage(getImage("/media/3_heart.png"));
+
     }
 
 
@@ -259,18 +290,21 @@ public class GoldController {
         fxTimi.setText("Leik lokið");
         fxLeikbord1.stoppaLeik();
         fxLeikbord2.stoppaLeik();
+
+        tilkynnaSigurvegara();
+
     }
 
     /**
      * Tíminn fyrir klukkunu er upphafsstilltur eftir því erfiðleikastigi sem er valið
      */
-    private void stillaTima() {
-        /*this.timi = switch (menuStyringController.getRadioMenuItem().getText()) {
-            case "Létt" -> 30;
+    private void stillaTima(String texti) {
+        this.timi = switch (texti) {
+            case "Auðvelt" -> 30;
             case "Miðlungs" -> 25;
             case "Erfitt" -> 20;
             default -> 0;
-        };*/
+        };
     }
 
     public void resume(){//halda áfram með leik úr valmynd-sunna
@@ -300,7 +334,7 @@ public class GoldController {
         fxStig.textProperty().unbind();
         fxStig.setText("0");
         fxStig.textProperty().bind(Bindings.concat("Stig: ", leikur.getStigProperty().asString()));
-        stillaTima();
+        stillaTima("Auðvelt");
 
         klukka.endurstillaTima(this.timi);
         klukka = new Klukka(timi);
@@ -342,8 +376,13 @@ public class GoldController {
                 fxLeikbord2.afram();
             }
         };
-
     }
+
+    /**
+     * Getter fyrir mynd
+     * @param urlS url myndarinnar
+     * @return myndinni skilað
+     */
     private Image getImage(String urlS){
         URL url = getClass().getResource(urlS);
         assert url != null;
@@ -352,7 +391,10 @@ public class GoldController {
     }
 
 
-
+    /**
+     * Hjörtu leikmanns 1 eru uppfærð
+     * @param lif fjöldi lífa sem leikmaður á eftir
+     */
     private void uppfaeraMynd(int lif) {
         String url = "/media/"+lif+"_heart.png";
         Image mynd = new Image(getClass().getResourceAsStream(url));
@@ -362,6 +404,10 @@ public class GoldController {
         }
     }
 
+    /**
+     * Hjörtu leikmanns 2 eru uppfærð
+     * @param lif fjöldi lífa sem leikmaður á eftir
+     */
     private void uppfaeraMynd2(int lif) {
         String url = "/media/"+lif+"_heart.png";
         Image mynd = new Image(getClass().getResourceAsStream(url));
@@ -369,6 +415,83 @@ public class GoldController {
         if(leikur2.getLif() == 0) {
             leikLokid();
         }
+    }
+
+
+    /**
+     * Lagið er spilað
+     */
+    public void spilaLag() {
+        if (!hljodstillingar.erHljodKveikt()) {
+            return; // Ekki spila ef slökkt er á hljóði
+        }
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose();
+        }
+        URL mediaUrl = getClass().getResource("/media/lag.mp3");
+        if (mediaUrl != null) {
+            Media media = new Media(mediaUrl.toExternalForm());
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            //mediaPlayer.setStopTime(new Duration(this.timi * 1000));
+            mediaPlayer.play();
+        } else {
+            System.err.println("Skráin fannst ekki: media/lag.mp3");
+        }
+    }
+
+    /**
+     * Lagið er stoppað
+     */
+    public void stoppaLag() {
+        if(mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose();
+        }
+    }
+
+    /**
+     * Sigurvegari er valinn, annað hvort sá sem missti ekki öll líf sín eða sá sem var með flest stig þegar tíminn rann út
+     * Alert gluggi poppar upp með tilkynningu og notandi getur valið um að hætta leik eða spila aftur
+     */
+    public void tilkynnaSigurvegara() {
+        int stig1 = leikur.getStig();
+        int stig2 = leikur2.getStig();
+
+        String tilkynning;
+        if(leikur.getLif() == 0) {
+            tilkynning = "Leikmaður 1 vinnur";
+        }
+        else if(leikur2.getLif() == 0) {
+            tilkynning = "Leikmaður 2 vinnur";
+        }
+        else if (stig1 > stig2) {
+            tilkynning = "Leikmaður 2 vinnur með " + stig1 + " stig!";
+        } else if (stig2 > stig1) {
+            tilkynning = "Leikmaður 1 vinnur með " + stig2 + " stig!";
+        } else {
+            tilkynning = "Jafntefli! Báðir leikmenn fengu " + stig1 + " stig.";
+        }
+
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Leik lokið");
+            alert.setHeaderText(tilkynning);
+            alert.setContentText("Viltu spila aftur eða hætta?");
+
+            ButtonType playAgainButton = new ButtonType("Spila aftur");
+            ButtonType quitButton = new ButtonType("Hætta", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(playAgainButton, quitButton);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == playAgainButton) {
+                endurraesa();
+            } else {
+                System.exit(0);
+            }
+        });
     }
 
 }
