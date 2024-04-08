@@ -8,19 +8,13 @@ import vinnsla.Leikur;
 
 public class Leikbord extends Pane {
 
-
     //tilviksbreytur
     private Leikur leikur;
     private boolean leikurIGangi = true;
     private ObservableList<Gull> gullListi = FXCollections.observableArrayList();
     private ObservableList<Sprengja> sprengjuListi = FXCollections.observableArrayList();
-
     @FXML
     private Grafari fxGrafari;
-
-    private GoldController goldController;
-
-
 
 
     /**
@@ -30,8 +24,6 @@ public class Leikbord extends Pane {
         System.out.println(this.idProperty());
         FXML_Lestur.lesa(this, "leikbord-view.fxml");
     }
-
-
 
     /**
      * Setter fyrir leik
@@ -44,7 +36,7 @@ public class Leikbord extends Pane {
     /**
      * Kallar á framleidaGull
      */
-    public void meiraGull() {
+    public void meiraGull() {//notum 2x
         if(!leikurIGangi) {
             return;
         }
@@ -123,14 +115,6 @@ public class Leikbord extends Pane {
     }
 
     /**
-     * Stillir boolean gildið svo leikurinn sé í gangi
-     */
-    public void raesaLeik() {
-        leikurIGangi = true;
-    }
-
-
-    /**
      * Athugað hvort grafari rekist á gull
      * @return true ef grafari er að rekast á gull, annars false
      */
@@ -195,15 +179,16 @@ public class Leikbord extends Pane {
      */
     public void upphafsstillaGrafara() {
         if(fxGrafari != null) {
-            fxGrafari.setLayoutX(this.getWidth());
-            fxGrafari.setLayoutY(this.getHeight());
+            fxGrafari.setLayoutX(this.getWidth()-310);
+            fxGrafari.setLayoutY(this.getHeight()-370);
+            fxGrafari.myndirSamkvæmtStefnu(Stefna.UPP);
         }
     }
 
     /**
      *
      */
-    public void meiriSprengjur() {
+    public void meiriSprengjur() {//notum2x
         if(!leikurIGangi) {
             return;
         }

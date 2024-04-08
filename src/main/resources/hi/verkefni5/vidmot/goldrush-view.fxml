@@ -11,6 +11,7 @@
 
 
 <?import hi.verkefni5.vidmot.Leikbord?>
+<?import javafx.scene.control.Button?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
             prefWidth="800.0" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="hi.verkefni5.vidmot.GoldController">
@@ -20,6 +21,9 @@
       <children>
         <AnchorPane prefHeight="100.0" prefWidth="800.0">
           <children>
+            <Button fx:id="fxStillingar" alignment="CENTER" contentDisplay="CENTER" layoutX="750" layoutY="10" prefWidth="30"
+                    prefHeight="30" onAction="#onStillingar">
+            </Button>
             <Label fx:id="fxTimi" alignment="CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="6.0"
                    prefHeight="87.0" prefWidth="445.0" text="Tími: "
                    AnchorPane.bottomAnchor="6.666666666666671" AnchorPane.topAnchor="0.0">

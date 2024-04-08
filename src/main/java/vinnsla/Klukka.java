@@ -13,6 +13,7 @@ public class Klukka {
     private SimpleIntegerProperty klukkaProperty;
     private Timeline timeline;
 
+
     /**
      * Klukkan búin til
      * @param startTimi upphafstíminn stilltur
@@ -69,6 +70,18 @@ public class Klukka {
     public void stop() {
         if (timeline != null) {
             timeline.stop();
+        }
+    }
+
+    public void pause(){
+        if(timeline!=null){
+            timeline.pause();
+        }
+    }
+
+    public void resume(){
+        if(timeline!=null){
+            timeline.play();
         }
     }
 

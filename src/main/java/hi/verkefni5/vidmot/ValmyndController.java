@@ -6,25 +6,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import vinnsla.DifficultyModel;
+import vinnsla.Erfidleikaval;
 
 import java.io.IOException;
 
 public class ValmyndController {
 
     //viðmótstilviksbreytur
-    @FXML
+    //@FXML
     private GoldController goldController;
 
     @FXML
-    private MenuItem fxBreyta;
+    private Button fxNyrLeikur;
 
     @FXML
     private Button fxAfram;
 
+    @FXML
+    private Button fxTilBaka;
+
     //togglegroup
     private ToggleGroup erfidleikastig = new ToggleGroup();
-    private DifficultyModel difficultyModel;
+    private Erfidleikaval erfidleikaval;
 
     /**
      * Þegar erfiðleikastig er valið
@@ -34,21 +37,36 @@ public class ValmyndController {
      * Nýr leikur er hafinn
      */
     @FXML
-    private void onNyrLeikur() {
-        goldController.endurraesa();
+    private void onNyrLeikur(ActionEvent actionEvent) throws IOException {
+        try {
+            GoldController.getInstance().endurraesa();//ef það er leikur í gangi
+
+            lokaNuverandiGlugga(actionEvent);
+        } catch (IllegalStateException e) {
+            try {
+                Stage stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(GoldApplication.class.getResource("goldrush-view.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                stage.setTitle("KubbaKapp");
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException a) {
+                e.printStackTrace();
+            }
+            lokaNuverandiGlugga(actionEvent);
+        }
     }
+
 
     @FXML
-    private void onHaldaAfram(){
-        if(this.goldController == null){
-            System.out.println("GoldController er null");
+    private void onHaldaAfram(ActionEvent actionEvent){
+        try {
+            GoldController.getInstance().resume();
+            lokaNuverandiGlugga(actionEvent);
+        } catch (IllegalStateException e) {
             fxAfram.setText("Enginn leikur í gangi");
         }
-        else {
-            goldController.resume();
-        }
     }
-
 
     /**
      *Alert dialog sem spyr hvort notandinn vilji hætta leik
@@ -98,18 +116,20 @@ public class ValmyndController {
         stage.setScene(new Scene(fxmlLoader.load()));
 
         ErfidleikastigController erfidleikastigController = fxmlLoader.getController();
-        // Now set the shared DifficultyModel on ErfidleikastigController
-        erfidleikastigController.setDifficultyModel(this.difficultyModel); // Assuming you have a getter for difficultyModel in ValmyndController
-
+        erfidleikastigController.setDifficultyModel(this.erfidleikaval);
         stage.show();
     }
 
-    /**
-     * setter
-     * @param goldController
-     */
-    public void setGoldController(GoldController goldController) {
-        this.goldController = goldController;
+    @FXML
+    private void onTilBaka(ActionEvent actionEvent){
+        Stage nuverandiStage = (Stage) fxTilBaka.getScene().getWindow();
+        nuverandiStage.close();
+    }
+
+    private void lokaNuverandiGlugga(ActionEvent actionEvent) {
+        Button sourceButton = (Button) actionEvent.getSource();
+        Stage currentStage = (Stage) sourceButton.getScene().getWindow();
+        currentStage.close();
     }
 
     public static void main(String[] args) {
