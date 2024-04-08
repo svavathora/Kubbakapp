@@ -7,6 +7,9 @@ import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,6 +26,7 @@ import vinnsla.Leikur;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class GoldController {
     //lif leikmanna
@@ -286,6 +290,9 @@ public class GoldController {
         fxTimi.setText("Leik lokið");
         fxLeikbord1.stoppaLeik();
         fxLeikbord2.stoppaLeik();
+
+        tilkynnaSigurvegara();
+
     }
 
     /**
@@ -369,8 +376,13 @@ public class GoldController {
                 fxLeikbord2.afram();
             }
         };
-
     }
+
+    /**
+     * Getter fyrir mynd
+     * @param urlS url myndarinnar
+     * @return myndinni skilað
+     */
     private Image getImage(String urlS){
         URL url = getClass().getResource(urlS);
         assert url != null;
@@ -379,7 +391,10 @@ public class GoldController {
     }
 
 
-
+    /**
+     * Hjörtu leikmanns 1 eru uppfærð
+     * @param lif fjöldi lífa sem leikmaður á eftir
+     */
     private void uppfaeraMynd(int lif) {
         String url = "/media/"+lif+"_heart.png";
         Image mynd = new Image(getClass().getResourceAsStream(url));
@@ -389,6 +404,10 @@ public class GoldController {
         }
     }
 
+    /**
+     * Hjörtu leikmanns 2 eru uppfærð
+     * @param lif fjöldi lífa sem leikmaður á eftir
+     */
     private void uppfaeraMynd2(int lif) {
         String url = "/media/"+lif+"_heart.png";
         Image mynd = new Image(getClass().getResourceAsStream(url));
@@ -398,9 +417,13 @@ public class GoldController {
         }
     }
 
+
+    /**
+     * Lagið er spilað
+     */
     public void spilaLag() {
         if (!hljodstillingar.erHljodKveikt()) {
-            return; // Don't play if sound is disabled
+            return; // Ekki spila ef slökkt er á hljóði
         }
         if (mediaPlayer != null) {
             mediaPlayer.stop();
@@ -418,11 +441,57 @@ public class GoldController {
         }
     }
 
+    /**
+     * Lagið er stoppað
+     */
     public void stoppaLag() {
         if(mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.dispose();
         }
+    }
+
+    /**
+     * Sigurvegari er valinn, annað hvort sá sem missti ekki öll líf sín eða sá sem var með flest stig þegar tíminn rann út
+     * Alert gluggi poppar upp með tilkynningu og notandi getur valið um að hætta leik eða spila aftur
+     */
+    public void tilkynnaSigurvegara() {
+        int stig1 = leikur.getStig();
+        int stig2 = leikur2.getStig();
+
+        String tilkynning;
+        if(leikur.getLif() == 0) {
+            tilkynning = "Leikmaður 1 vinnur";
+        }
+        else if(leikur2.getLif() == 0) {
+            tilkynning = "Leikmaður 2 vinnur";
+        }
+        else if (stig1 > stig2) {
+            tilkynning = "Leikmaður 2 vinnur með " + stig1 + " stig!";
+        } else if (stig2 > stig1) {
+            tilkynning = "Leikmaður 1 vinnur með " + stig2 + " stig!";
+        } else {
+            tilkynning = "Jafntefli! Báðir leikmenn fengu " + stig1 + " stig.";
+        }
+
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Leik lokið");
+            alert.setHeaderText(tilkynning);
+            alert.setContentText("Viltu spila aftur eða hætta?");
+
+            ButtonType playAgainButton = new ButtonType("Spila aftur");
+            ButtonType quitButton = new ButtonType("Hætta", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(playAgainButton, quitButton);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == playAgainButton) {
+                endurraesa();
+            } else {
+                System.exit(0);
+            }
+        });
     }
 
 }
