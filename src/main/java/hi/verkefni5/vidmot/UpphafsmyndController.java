@@ -37,11 +37,9 @@ public class UpphafsmyndController {
     @FXML
     private Label fxLeikmadur2;
 
-
-   //Þegar ýtum á takkann, á að koma upp til að velja tvo notendur og þaðan inn í leikinn
-
-    private KubbaKappController kubbaKappController;
-
+    /**
+     * Þegar upphafsmyndin keyrð þá er náð í nöfn notanda
+     */
     public void initialize(){
         Innskraning innskraning1 = KubbaKappApplication.getLoggedInLeikmadur1();
         if(innskraning1 != null) {
@@ -53,8 +51,14 @@ public class UpphafsmyndController {
         }
     }
 
-    //Þegar ýtum á takkann, á að koma upp til að velja tvo notendur og þaðan inn í leikinn
-    //fer þá önnur fxml skrá i staðin fyrir goldrush-view, en var bara að sjá hvort virkaði -sunna
+
+
+    /**
+     * Þegar ýtt er á Byrja leik þá kemur upp dialog fyrir notanda að skrá sig inn með nöfnum
+     * Þegar búið er að skýra notendur þá getur notandi hafið leik og spilaborðið kemur upp
+     * @param actionEvent ýtt á byrja leik takkann
+     * @throws IOException
+     */
     @FXML
     public void onByrjaLeik(ActionEvent actionEvent) throws IOException {
         InnskraningDialog dialog = new InnskraningDialog();
@@ -75,29 +79,24 @@ public class UpphafsmyndController {
             stage.setScene(new Scene(root));
             stage.show();
 
-
             ((Stage) fxByrjaLeik.getScene().getWindow()).close();
         }
 
     }
 
     /**
-     * Ýtum á stillingartakkann (vantar mynd) og fáum upp valmynd
+     * Ýtum á stillingartakkann og fáum upp valmynd
      *
      * @param actionEvent
-     * @throws IOException
      */
     @FXML
-    public void onStillingar(ActionEvent actionEvent) throws IOException {
-
+    public void onStillingar(ActionEvent actionEvent) {
         Stage primaryStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
         try {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("valmynd-view.fxml"));
             VBox content = fxmlLoader.load();
             Dialog<Void> dialog = new Dialog<>();
-
 
             DialogPane dialogPane = new DialogPane();
             dialogPane.setContent(content);
@@ -105,8 +104,6 @@ public class UpphafsmyndController {
 
             dialog.initOwner(primaryStage);
             dialog.initModality(Modality.APPLICATION_MODAL);
-
-
 
             dialog.showAndWait();
 

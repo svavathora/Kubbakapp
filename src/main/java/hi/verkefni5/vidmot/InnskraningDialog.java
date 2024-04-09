@@ -11,17 +11,19 @@ import java.io.IOException;
 
 public class InnskraningDialog extends Dialog<Pair<String, String>> {
 
-    //Tilviksbreytur
-    //private Innskraning innskraning1;
-   // private Innskraning innskraning2;
+    //viðmótstilviksbreytur
     @FXML
     private TextField fxNafnLeikmanns1;
     @FXML
     private TextField fxNafnLeikmanns2;
-
     @FXML
     private ButtonType fxHefjaLeik;
 
+    /**
+     * Smiður fyrir InnskraningDialog
+     * Birtir skjá, leyfir notendum að skrá nöfn sín
+     * og hefja leik
+     */
     public InnskraningDialog() {
         setDialogPane(lesaDialog());
         setResultConverter();
@@ -29,6 +31,11 @@ public class InnskraningDialog extends Dialog<Pair<String, String>> {
 
     }
 
+    /**
+     * Stillir niðurstöðurnar í það sem notendur skrifuðu inn
+     * þeggar ýtt er á Hefja leik hnappinn þá eru bæði nöfnin sótt
+     * og eru skiluð sem pari
+     */
     private void setResultConverter() {
         setResultConverter(b -> {
             if (b.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
@@ -41,6 +48,11 @@ public class InnskraningDialog extends Dialog<Pair<String, String>> {
         });
     }
 
+    /**
+     * Hleður glugganum úr FXML skránni sem gefur notanda möguleika
+     * á að skrá sig inn
+     * @return skila
+     */
     private DialogPane lesaDialog() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("innskraning-view.fxml"));
         try {
@@ -51,6 +63,9 @@ public class InnskraningDialog extends Dialog<Pair<String, String>> {
         }
     }
 
+    /**
+     * Passar að það sé ekki hægt að hefja leik fyrr en báðir notendur eru búnir að skrifa inn nafn
+     */
     private void iLagiRegla() {
         Node iLagi = getDialogPane().lookupButton(fxHefjaLeik);
         iLagi.disableProperty().bind(

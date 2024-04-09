@@ -198,7 +198,7 @@ public class KubbaKappController {
 
 
     /**
-     * Orvatakkarnir stilltir og tengdir við leikborðið
+     * Orvatakkarnir fyrir leikborð 1 stilltir og tengdir við leikborðið
      */
     public void orvatakkar() {
         map1.put(KeyCode.UP, Stefna.UPP);
@@ -216,7 +216,7 @@ public class KubbaKappController {
     }
 
     /**
-     * Orvatakkarnir stilltir og tengdir við leikborðið
+     * Orvatakkarnir fyrir leikborð 2 stilltir og tengdir við leikborðið
      */
     public void orvatakkar2() {
         map2.put(KeyCode.W, Stefna.UPP);
