@@ -7,14 +7,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import vinnsla.Erfidleikaval;
-
+import vinnsla.Hljodstillingar;
 import java.io.IOException;
 
 public class ValmyndController {
 
-    //viðmótstilviksbreytur
-    //@FXML
-    private GoldController goldController;
+    @FXML
+    public RadioButton fxHljod;
+
+    private KubbaKappController kubbaKappController;
 
     @FXML
     private Button fxNyrLeikur;
@@ -29,6 +30,16 @@ public class ValmyndController {
     private ToggleGroup erfidleikastig = new ToggleGroup();
     private Erfidleikaval erfidleikaval;
 
+
+    /**
+     * Þegar valmyndin er opnuð er kveikt á listener á milli fxHljod takkans og hljóðsins í Hljóðstillingaklasanum
+     */
+    public void initialize() {
+       fxHljod.selectedProperty().addListener((obs, varValid, erValid) -> {
+            Hljodstillingar.getHljodstillingar().kveikjaAHljodi(erValid);
+        });
+    }
+
     /**
      * Þegar erfiðleikastig er valið
      */
@@ -39,13 +50,13 @@ public class ValmyndController {
     @FXML
     private void onNyrLeikur(ActionEvent actionEvent) throws IOException {
         try {
-            GoldController.getInstance().endurraesa();//ef það er leikur í gangi
+            KubbaKappController.getInstance().endurraesa();//ef það er leikur í gangi
 
             lokaNuverandiGlugga(actionEvent);
         } catch (IllegalStateException e) {
             try {
                 Stage stage = new Stage();
-                FXMLLoader fxmlLoader = new FXMLLoader(GoldApplication.class.getResource("goldrush-view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("goldrush-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 stage.setTitle("KubbaKapp");
                 stage.setScene(scene);
@@ -61,7 +72,7 @@ public class ValmyndController {
     @FXML
     private void onHaldaAfram(ActionEvent actionEvent){
         try {
-            GoldController.getInstance().resume();
+            KubbaKappController.getInstance().resume();
             lokaNuverandiGlugga(actionEvent);
         } catch (IllegalStateException e) {
             fxAfram.setText("Enginn leikur í gangi");
@@ -69,7 +80,8 @@ public class ValmyndController {
     }
 
     /**
-     *Alert dialog sem spyr hvort notandinn vilji hætta leik
+     * Alert dialog sem spyr hvort notandinn vilji hætta leik
+     *
      * @param actionEvent ýtt á hætta
      */
     @FXML
@@ -93,22 +105,29 @@ public class ValmyndController {
 
     /**
      * Alert dialog sem segir notanda frá forritinu
+     *
      * @param actionEvent ýtt á um forritið
      */
     @FXML
     private void onUmForritid(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Um forritið");
-        alert.setHeaderText("Gullgrafaraleikur");
-        alert.setContentText("Hreyfðu gullgrafarann og grafðu eftir gulli til að safna stigum. \n" +
-                "Hægt er að stilla erfiðleikastig undir \"Breyta\". \n" +
-                "Hægt er að hefja nýjan leik eða hætta undir \"Skrá\". \n" +
+        alert.setHeaderText("KubbaKapp");
+        alert.setContentText("KubbaKapp er leikur þar sem tveir leikmenn keppast um að safna stigum á vissum tíma. \n" +
+                "Tíminn fer eftir erfileikastigi (létt, miðlungs, erfitt) sem hægt er að velja í stillingum. \n" +
+                "Hafa skal varann á sprengjum sem birtast af og til, ef leikmaður rekst á sprengju missir hann 1 af 3 lífum. " +
+                "Ef öll líf klárast tapar sá hin sami leiknum. \n" + "Stig eru söfnuð með að ná kubbum, sem líkt og sprengjurnar birtast á leikskjánnum. \n" +
+                "\n" + "Þegar sigri er náð birtist gluggi sem hefur valmöguleika á að hefja nýjan leik eða hætta.\n" +
+                " \n" +
                 "KubbaKappar smíðuðu þetta forrit.");
-
-
         alert.showAndWait();
     }
 
+    /**
+     * Birtir erfiðleikastigsvalmyndina og setur valið erfiðleikastig sem erfiðleikastigið í erfiðleikastigControllernum
+     *
+     * @throws IOException
+     */
     @FXML
     private void onErfidleikastig() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("erfidleikastig-view.fxml"));
@@ -130,6 +149,16 @@ public class ValmyndController {
         Button sourceButton = (Button) actionEvent.getSource();
         Stage currentStage = (Stage) sourceButton.getScene().getWindow();
         currentStage.close();
+    }
+
+    /**
+     * setter
+     *
+     * @param kubbaKappController
+     */
+    public void setGoldController(KubbaKappController kubbaKappController) {
+        this.kubbaKappController = kubbaKappController;
+        Hljodstillingar.getHljodstillingar().kveikjaAHljodi(fxHljod.isSelected());
     }
 
     public static void main(String[] args) {

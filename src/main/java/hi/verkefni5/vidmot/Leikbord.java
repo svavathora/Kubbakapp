@@ -16,6 +16,7 @@ public class Leikbord extends Pane {
     @FXML
     private Grafari fxGrafari;
 
+    private KubbaKappController kubbaKappController;
 
     /**
      * Smiðurinn, fxml skráin lesin inn
@@ -27,6 +28,7 @@ public class Leikbord extends Pane {
 
     /**
      * Setter fyrir leik
+     *
      * @param leikur leikur
      */
     public void setLeikur(Leikur leikur) {
@@ -36,7 +38,7 @@ public class Leikbord extends Pane {
     /**
      * Kallar á framleidaGull
      */
-    public void meiraGull() {//notum 2x
+    public void meiraGull() {
         if(!leikurIGangi) {
             return;
         }
@@ -45,10 +47,11 @@ public class Leikbord extends Pane {
 
     /**
      * Kallar á setterinn fyrir grafarann og svo áfram fallið
+     *
      * @param stefna stefna
      */
     public void setStefna(Stefna stefna) {
-        if(!leikurIGangi) {
+        if (!leikurIGangi) {
             return;
         }
         fxGrafari.setStefna(stefna);
@@ -60,7 +63,7 @@ public class Leikbord extends Pane {
      */
     public void afram() {
         final double stepSize = 10;
-        if(!leikurIGangi) {
+        if (!leikurIGangi) {
             return;
         }
 
@@ -100,7 +103,7 @@ public class Leikbord extends Pane {
             }
 
             if (erRekstASprengju()) {
-                System.out.println("breyti mynd um líf"+this.leikur);
+                System.out.println("breyti mynd um líf" + this.leikur);
                 leikur.laekkaLif();
                 sprengjuArekstur();
             }
@@ -116,6 +119,7 @@ public class Leikbord extends Pane {
 
     /**
      * Athugað hvort grafari rekist á gull
+     *
      * @return true ef grafari er að rekast á gull, annars false
      */
     public boolean erGrefurGull() {
@@ -186,9 +190,9 @@ public class Leikbord extends Pane {
     }
 
     /**
-     *
+     *  setur sprengjur á borðið ef leikur er í gangi
      */
-    public void meiriSprengjur() {//notum2x
+    public void meiriSprengjur() {
         if(!leikurIGangi) {
             return;
         }
@@ -224,8 +228,9 @@ public class Leikbord extends Pane {
         for (Sprengja sprengja : sprengjuListi) {
             if (fxGrafari.getBoundsInParent().intersects(sprengja.getBoundsInParent())) {
                 //Sprengju animation
+                System.out.println("sprengjuhljoð");
+                sprengja.spilaHljod();
                 sprengja.boom();
-
                 sprengjuListi.remove(sprengja);
                 break;
             }
@@ -234,6 +239,7 @@ public class Leikbord extends Pane {
 
     /**
      * Athugað hvort grafari klessi á sprengju
+     *
      * @return true ef grafari er að klessa á sprengju, annars false
      */
     public boolean erRekstASprengju() {

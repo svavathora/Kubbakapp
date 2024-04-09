@@ -21,23 +21,20 @@ public class UpphafsmyndController {
     @FXML
     private ImageView fxMyndStillingar;
 
-    private GoldController goldController;
+    private KubbaKappController kubbaKappController;
 
     public void initialize(){ //vil setja mynd á stillingarnar-sunna
-
         System.out.println("Initialize NyrLeikurController");
-
-
     }
 
-   //Þegar ýtum á takkann, á að koma upp til að velja tvo notendur og þaðan inn í leikinn
+    //Þegar ýtum á takkann, á að koma upp til að velja tvo notendur og þaðan inn í leikinn
     //fer þá önnur fxml skrá i staðin fyrir goldrush-view, en var bara að sjá hvort virkaði -sunna
     @FXML
     public void onByrjaLeik(ActionEvent actionEvent) throws IOException {
         System.out.println("Byrjum Leik");
         Stage stage = new Stage();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(GoldApplication.class.getResource("goldrush-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("goldrush-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
         //FXML_Lestur.lesa(this,"goldrush-view.fxml"); -skil ekki alveg hvernig þú notar þetta en 100% hægt að nota frekar
@@ -49,21 +46,19 @@ public class UpphafsmyndController {
         stage.show();
         Stage nuverandiStage = (Stage) fxByrjaLeik.getScene().getWindow();
         nuverandiStage.close();
-
-
     }
 
 
     /**
      * Ýtum á stillingartakkann (vantar mynd) og fáum upp valmynd
+     *
      * @param actionEvent
      * @throws IOException
      */
     @FXML
     public void onStillingar(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(GoldApplication.class.getResource("valmynd-view.fxml"));
-
+        FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("valmynd-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 202, 300);
         stage.setScene(scene);
         stage.show();

@@ -16,11 +16,12 @@ public class Klukka {
 
     /**
      * Klukkan búin til
+     *
      * @param startTimi upphafstíminn stilltur
      */
     public Klukka(int startTimi) {
 
-       klukkaProperty = new SimpleIntegerProperty(startTimi);
+        klukkaProperty = new SimpleIntegerProperty(startTimi);
 
         //kallað á tic
         EventHandler<ActionEvent> eventHandler = e -> {
@@ -46,6 +47,7 @@ public class Klukka {
 
         }
     }
+
 
 
     /**
