@@ -2,48 +2,39 @@ package hi.verkefni5.vidmot;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.util.Pair;
 import vinnsla.Innskraning;
 
 import java.io.IOException;
 
-public class InnskraningDialog extends Dialog<Innskraning> {
+public class InnskraningDialog extends Dialog<Pair<String, String>> {
 
     //Tilviksbreytur
-    private Innskraning innskraning1;
-    private Innskraning innskraning2;
+    //private Innskraning innskraning1;
+   // private Innskraning innskraning2;
     @FXML
     private TextField fxNafnLeikmanns1;
     @FXML
     private TextField fxNafnLeikmanns2;
 
-    public InnskraningDialog(Innskraning innskraning1, Innskraning innskraning2) {
-        this.innskraning1 = innskraning1;
-        this.innskraning2 = innskraning2;
+    @FXML
+    private ButtonType fxHefjaLeik;
+
+    public InnskraningDialog() {
         setDialogPane(lesaDialog());
-        setResultConverter1();
-        setResultConverter2();
+        setResultConverter();
+        iLagiRegla();
+
     }
 
-    private void setResultConverter1() {
+    private void setResultConverter() {
         setResultConverter(b -> {
             if (b.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                innskraning1.setNafn1(fxNafnLeikmanns1.getText());
-                return innskraning1;
-            } else {
-                return null;
-            }
-        });
-    }
-
-    private void setResultConverter2() {
-        setResultConverter(b -> {
-            if (b.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                innskraning2.setNafn2(fxNafnLeikmanns2.getText());
-                return innskraning2;
+                String leikmadur1 = fxNafnLeikmanns1.getText();
+                String leikmadur2 = fxNafnLeikmanns2.getText();
+                return new Pair<>(leikmadur1, leikmadur2);
             } else {
                 return null;
             }
@@ -58,6 +49,13 @@ public class InnskraningDialog extends Dialog<Innskraning> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void iLagiRegla() {
+        Node iLagi = getDialogPane().lookupButton(fxHefjaLeik);
+        iLagi.disableProperty().bind(
+                fxNafnLeikmanns1.textProperty().isEmpty()
+                        .or(fxNafnLeikmanns2.textProperty().isEmpty()));
     }
 
     public static void main(String[] args) {

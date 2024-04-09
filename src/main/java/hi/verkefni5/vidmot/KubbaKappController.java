@@ -46,6 +46,11 @@ public class KubbaKappController {
     private ErfidleikastigController erfidleikastigController = new ErfidleikastigController();
 
     @FXML
+    private Label fxLeikmadur1;
+
+    @FXML
+    private Label fxLeikmadur2;
+    @FXML
     private Label fxStig;
     @FXML
     private Label fxStig2;
@@ -521,5 +526,10 @@ public class KubbaKappController {
                     System.exit(0);
                 }
             });
+        }
+
+        public void setLeikmennNofn(String nafn1, String nafn2){
+            fxLeikmadur1.setText(nafn1);
+            fxLeikmadur2.setText(nafn2);
         }
     }

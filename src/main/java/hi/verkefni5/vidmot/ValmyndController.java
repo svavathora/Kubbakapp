@@ -149,8 +149,7 @@ public class ValmyndController {
 
     @FXML
     private void onTilBaka(ActionEvent actionEvent){
-        Stage nuverandiStage = (Stage) fxTilBaka.getScene().getWindow();
-        nuverandiStage.close();
+       lokaNuverandiGlugga(actionEvent);
     }
 
     private void lokaNuverandiGlugga(ActionEvent actionEvent) {
