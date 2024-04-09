@@ -20,7 +20,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import vinnsla.Erfidleikaval;
-import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import vinnsla.Hljodstillingar;
@@ -42,8 +41,6 @@ public class KubbaKappController {
     //viðmótstilviksbreytur
 
     private MediaPlayer mediaPlayer;
-
-    private ErfidleikastigController erfidleikastigController = new ErfidleikastigController();
 
     @FXML
     private Label fxStig;
@@ -74,18 +71,25 @@ public class KubbaKappController {
     private Timeline sprengjuTimeline;
     private EventHandler<KeyEvent> hreyfing;
 
-    private EventHandler<KeyEvent> hreyfing2;
-
     private Erfidleikaval erfidleikaval = Erfidleikaval.getValNotanda();
 
     private Hljodstillingar hljodstillingar = Hljodstillingar.getHljodstillingar();
 
     private static KubbaKappController instance;
 
+    /**
+     * smiður fyrir klasann KuppaKappController
+     */
     public KubbaKappController() {
         instance = this;
     }
 
+    /**
+     * Skilar einstökum tilvikum af KubbaKappaLeik.
+     * Tryggir aðaðeins eitt tilvik sé búið til og notað í gegnum allt forritið.
+     *
+     * @return skilar einstöku tilviki af KubbaKappaleik
+     */
     public static KubbaKappController getInstance() {
         if (instance == null) {
             throw new IllegalStateException("GoldController instance not yet initialized.");
@@ -126,7 +130,6 @@ public class KubbaKappController {
 
         stillaTima(timi);
 
-
         spilaLag();
         Platform.runLater(() -> fxLeikbord1.requestFocus());
         Platform.runLater(() -> fxLeikbord2.requestFocus());
@@ -149,6 +152,11 @@ public class KubbaKappController {
         fxTimi.textProperty().bind(Bindings.concat(klukka.getKlukkaProperty().asString(), " sek"));
     }
 
+    /**
+     * Opnar valmynd fyrir notanda
+     * @param actionEvent þegar ýtt er á takkann
+     * @throws IOException kastar IOException
+     */
     @FXML
     public void onStillingar(ActionEvent actionEvent) throws IOException {
         pause();
@@ -162,7 +170,7 @@ public class KubbaKappController {
     }
 
     /**
-     * Orvatakkarnir stilltir og tengdir við leikborðið
+     * Orvatakkarnir stilltir fyrir leikmann 1 og tengdir við leikborðið
      */
     public void orvatakkar() {
         map1.put(KeyCode.UP, Stefna.UPP);
@@ -179,6 +187,9 @@ public class KubbaKappController {
         });
     }
 
+    /**
+     * Orvatakkarnir stilltir fyrir leikmann 2 og tengdir við leikborðið
+     */
     public void orvatakkar2() {
         map2.put(KeyCode.W, Stefna.UPP);
         map2.put(KeyCode.S, Stefna.NIDUR);
@@ -297,6 +308,10 @@ public class KubbaKappController {
         };
     }
 
+    /**
+     * Leikurinn settur á pásu
+     * Pásar klukkur og tímalínur
+     */
     public void pause() {
         if (gullTimeline != null) {
             gullTimeline.pause();
@@ -312,6 +327,9 @@ public class KubbaKappController {
         }
     }
 
+    /**
+     * Leikur heldur áfram
+     */
     public void resume() {
         if (gullTimeline != null) {
             gullTimeline.play();
@@ -356,7 +374,10 @@ public class KubbaKappController {
             hefjaLeik();
         }
 
-        private void nyjarTimalinur () {
+    /**
+     * Byrjum nyjar timalinur fyrir leikinn
+     */
+    private void nyjarTimalinur () {
             if (gullTimeline != null) {
                 gullTimeline.stop();
                 gullTimeline = null;
@@ -374,6 +395,9 @@ public class KubbaKappController {
             }
         }
 
+        /**
+         * Uppfærir stöðu líf og Stig leikmanna
+         */
         public void uppfaeraStigOgLif () {
             fxStig.textProperty().bind(Bindings.concat("Stig: ", leikur.getStigProperty().asString()));
             fxStig2.textProperty().bind(Bindings.concat("Stig: ", leikur2.getStigProperty().asString()));

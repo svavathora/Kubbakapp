@@ -28,11 +28,9 @@ public class Sprengja extends Pane {
 
         this.setPrefSize(40, 40);
 
-
         imageView = new ImageView();
         imageView.setFitWidth(40);
         imageView.setFitHeight(40);
-
 
         URL url = getClass().getResource("/media/bomb.png");
         assert url != null;

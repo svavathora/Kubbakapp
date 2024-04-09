@@ -21,26 +21,28 @@ public class UpphafsmyndController {
     @FXML
     private ImageView fxMyndStillingar;
 
-    private KubbaKappController kubbaKappController;
+    /**
+     * initialize klasann
+     */
+    public void initialize(){
 
-    public void initialize(){ //vil setja mynd á stillingarnar-sunna
-        System.out.println("Initialize NyrLeikurController");
     }
 
-    //Þegar ýtum á takkann, á að koma upp til að velja tvo notendur og þaðan inn í leikinn
-    //fer þá önnur fxml skrá i staðin fyrir goldrush-view, en var bara að sjá hvort virkaði -sunna
+
+    /**
+     * Byrjar nýjan Leik
+     * @param actionEvent þegar notandi ýtir á takkann
+     * @throws IOException kastar IOException
+     */
     @FXML
-    public void onByrjaLeik(ActionEvent actionEvent) throws IOException {
+    public void onByrjaLeik(ActionEvent actionEvent) throws IOException { //Þegar ýtum á takkann, á að koma upp til að velja tvo notendur og þaðan inn í leikinn
+        //fer þá önnur fxml skrá i staðin fyrir goldrush-view, en var bara að sjá hvort virkaði -sunna
+
         System.out.println("Byrjum Leik");
         Stage stage = new Stage();
 
         FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("goldrush-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-
-        //FXML_Lestur.lesa(this,"goldrush-view.fxml"); -skil ekki alveg hvernig þú notar þetta en 100% hægt að nota frekar
-        //til að gera þetta betri kóða -sunna
-        //Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
-
         stage.setTitle("KubbaKapp");
         stage.setScene(scene);
         stage.show();
@@ -50,7 +52,7 @@ public class UpphafsmyndController {
 
 
     /**
-     * Ýtum á stillingartakkann (vantar mynd) og fáum upp valmynd
+     * Ýtum á stillingartakkann og fáum upp valmynd
      *
      * @param actionEvent
      * @throws IOException

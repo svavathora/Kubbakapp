@@ -34,6 +34,9 @@ public class ErfidleikastigController {
         this.erfidleikaval = model;
     }
 
+    /**
+     * Stillir erfiðleikastig leiksins eftir því sem notandi valdi
+     */
     @FXML
     private void onErfidleikastig() {
         Erfidleikaval erfidleikaval = Erfidleikaval.getValNotanda();
@@ -44,6 +47,9 @@ public class ErfidleikastigController {
         }
     }
 
+    /**
+     * initialize klassann
+     */
     @FXML
     public void initialize() {
         String currentDifficulty = Erfidleikaval.getValNotanda().getErfidleiki();
@@ -63,6 +69,11 @@ public class ErfidleikastigController {
         }
     }
 
+    /**
+     * Fara til baka í valmynd
+     * @param actionEvent
+     * @throws IOException
+     */
     @FXML
     private void onTilBaka(ActionEvent actionEvent) throws IOException {
         Stage nuverandiStage = (Stage) fxTilBaka.getScene().getWindow();

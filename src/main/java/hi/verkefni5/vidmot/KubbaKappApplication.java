@@ -18,6 +18,5 @@ public class KubbaKappApplication extends Application {
         stage.show();
 
 
-
     }
 }

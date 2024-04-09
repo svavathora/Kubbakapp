@@ -18,11 +18,7 @@
       </list>
     </option>
   </component>
-<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" languageLevel="JDK_18" project-jdk-name="temurin-21" project-jdk-type="JavaSDK">
-=======
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK">
->>>>>>> 937b907c829d47352f6e214efbe97f6bc727f820
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

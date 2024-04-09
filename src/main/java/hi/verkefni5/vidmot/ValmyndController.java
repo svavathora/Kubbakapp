@@ -15,8 +15,6 @@ public class ValmyndController {
     @FXML
     public RadioButton fxHljod;
 
-    private KubbaKappController kubbaKappController;
-
     @FXML
     private Button fxNyrLeikur;
 
@@ -26,9 +24,9 @@ public class ValmyndController {
     @FXML
     private Button fxTilBaka;
 
-    //togglegroup
-    private ToggleGroup erfidleikastig = new ToggleGroup();
     private Erfidleikaval erfidleikaval;
+
+    private KubbaKappController kubbaKappController;
 
 
     /**
@@ -47,10 +45,6 @@ public class ValmyndController {
             }
         });
     }
-
-    /**
-     * Þegar erfiðleikastig er valið
-     */
 
     /**
      * Nýr leikur er hafinn
@@ -76,7 +70,10 @@ public class ValmyndController {
         }
     }
 
-
+    /**
+     * Þegar ýtum á höldum áfram resumar leikurinn
+     * @param actionEvent notandi ýtir á takkann
+     */
     @FXML
     private void onHaldaAfram(ActionEvent actionEvent){
         try {
@@ -147,12 +144,21 @@ public class ValmyndController {
         stage.show();
     }
 
+    /**
+     * Fara til baka í Leikinn og lokar valmynd
+     *
+     * @param actionEvent notandi ýtir á takka
+     */
     @FXML
     private void onTilBaka(ActionEvent actionEvent){
-        Stage nuverandiStage = (Stage) fxTilBaka.getScene().getWindow();
-        nuverandiStage.close();
+        lokaNuverandiGlugga(actionEvent);
     }
 
+    /**
+     * Lokar núverandi glugga
+     *
+     * @param actionEvent
+     */
     private void lokaNuverandiGlugga(ActionEvent actionEvent) {
         Button sourceButton = (Button) actionEvent.getSource();
         Stage currentStage = (Stage) sourceButton.getScene().getWindow();
@@ -160,11 +166,11 @@ public class ValmyndController {
     }
 
     /**
-     * setter
+     * setter fyrir
      *
      * @param kubbaKappController
      */
-    public void setGoldController(KubbaKappController kubbaKappController) {
+    public void setGoldController(KubbaKappController kubbaKappController) {//í notkun????
         this.kubbaKappController = kubbaKappController;
         Hljodstillingar.getHljodstillingar().kveikjaAHljodi(fxHljod.isSelected());
     }
