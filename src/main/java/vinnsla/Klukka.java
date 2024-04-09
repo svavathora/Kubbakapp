@@ -31,7 +31,7 @@ public class Klukka {
         // Búum til timalinu sem uppfærist á hverri sekúndu og gengur endalaust
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), eventHandler));
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play(); // Start animation
+        timeline.play();
     }
 
 
@@ -43,7 +43,6 @@ public class Klukka {
             klukkaProperty.set(klukkaProperty.get() - 1);
         } else {
             stop();
-            System.out.println("Tíminn er búinn");
 
         }
     }
@@ -75,12 +74,18 @@ public class Klukka {
         }
     }
 
+    /**
+     * tímalínan pásuð
+     */
     public void pause(){
         if(timeline!=null){
             timeline.pause();
         }
     }
 
+    /**
+     * tímalínan sett í gang aftur eftir pásu
+     */
     public void resume(){
         if(timeline!=null){
             timeline.play();

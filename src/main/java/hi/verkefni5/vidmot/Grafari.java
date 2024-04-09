@@ -26,15 +26,19 @@ public class Grafari extends Pane {
         imageView = new ImageView();
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
-
         imageView.setImage(blueUp);
-
 
         this.getChildren().add(imageView);
         this.setLayoutX(50);
         this.setLayoutY(50);
 
     }
+
+    /**
+     * Fall sem skilar url-i myndar á réttu formi
+     * @param urlS hlekkur myndarinnar
+     * @return hlekki á réttu formi
+     */
     public Image getImage(String urlS){
         URL url = getClass().getResource(urlS);
         assert url != null;
@@ -64,6 +68,11 @@ public class Grafari extends Pane {
         return nuverandiStefna;
     }
 
+
+    /**
+     * Myndinni er snúið í rétta stefnu
+     * @param stefna stefna sem snúa á mynd í
+     */
     public void myndirSamkvæmtStefnu(Stefna stefna) {
         switch (stefna) {
             case UPP -> imageView.setImage(blueUp);

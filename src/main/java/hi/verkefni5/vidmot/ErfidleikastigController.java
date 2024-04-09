@@ -13,6 +13,8 @@ import java.io.IOException;
 
 public class ErfidleikastigController {
 
+    //viðmótstilviksbreytur
+
     @FXML
     private ToggleGroup fxErfidleikastig;
 
@@ -28,12 +30,17 @@ public class ErfidleikastigController {
     @FXML
     private RadioButton stig3;
 
+    //tilviksbreytur
+
     private Erfidleikaval erfidleikaval = Erfidleikaval.getValNotanda();
 
     public void setDifficultyModel(Erfidleikaval model) {
         this.erfidleikaval = model;
     }
 
+    /**
+     * Valið erfiðleikastig er sett í tilviksbreytuna
+     */
     @FXML
     private void onErfidleikastig() {
         Erfidleikaval erfidleikaval = Erfidleikaval.getValNotanda();
@@ -44,6 +51,9 @@ public class ErfidleikastigController {
         }
     }
 
+    /**
+     * Valið erfiðleikastig er stillt og uppfært í viðmótinu
+     */
     @FXML
     public void initialize() {
         String currentDifficulty = Erfidleikaval.getValNotanda().getErfidleiki();
@@ -63,6 +73,12 @@ public class ErfidleikastigController {
         }
     }
 
+
+    /**
+     * Aðferðin færir notanda aftur í valmyndina
+     * @param actionEvent ýtt á til baka takkann
+     * @throws IOException
+     */
     @FXML
     private void onTilBaka(ActionEvent actionEvent) throws IOException {
         Stage nuverandiStage = (Stage) fxTilBaka.getScene().getWindow();

@@ -12,7 +12,6 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -44,7 +43,6 @@ public class UpphafsmyndController {
     private KubbaKappController kubbaKappController;
 
     public void initialize(){
-        System.out.println("Initialize NyrLeikurController");
         Innskraning innskraning1 = KubbaKappApplication.getLoggedInLeikmadur1();
         if(innskraning1 != null) {
             fxLeikmadur1.setText(innskraning1.getNafn1());
@@ -59,59 +57,28 @@ public class UpphafsmyndController {
     //fer þá önnur fxml skrá i staðin fyrir goldrush-view, en var bara að sjá hvort virkaði -sunna
     @FXML
     public void onByrjaLeik(ActionEvent actionEvent) throws IOException {
-        System.out.println("Byrjum Leik");
-
         InnskraningDialog dialog = new InnskraningDialog();
         dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(fxByrjaLeik.getScene().getWindow()); // Set the owner of the dialog
+        dialog.initOwner(fxByrjaLeik.getScene().getWindow());
         Optional<Pair<String, String>> result = dialog.showAndWait();
 
         if (result.isPresent()) {
             Pair<String, String> playerNames = result.get();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("goldrush-view.fxml")); // Ensure this path is correct
-            Parent root = fxmlLoader.load(); // Load the root
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("goldrush-view.fxml"));
+            Parent root = fxmlLoader.load();
 
             KubbaKappController controller = fxmlLoader.getController();
             controller.setLeikmennNofn(playerNames.getKey(), playerNames.getValue());
 
             Stage stage = new Stage();
             stage.setTitle("KubbaKapp");
-            stage.setScene(new Scene(root)); // Use the loaded root
+            stage.setScene(new Scene(root));
             stage.show();
 
-            // Close the current window
+
             ((Stage) fxByrjaLeik.getScene().getWindow()).close();
         }
 
-
-
-       /* InnskraningDialog dialog = new InnskraningDialog(new Innskraning("",""), new Innskraning("",""));
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        Optional<Pair<String, String>> result = dialog.showAndWait();
-
-        /*result.ifPresent(nofnLeikmanna ->{
-
-        });*/
-        //Stage stage = new Stage();
-        //FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("goldrush-view.fxml"));
-
-        //InnskraningDialog dialog = new InnskraningDialog(nyrInnskraning1, nyrInnskraning2);
-        //dialog.initModality(Modality.APPLICATION_MODAL);
-        //Optional<Innskraning> result = dialog.showAndWait();
-
-        /*result.ifPresent(nofnLeikmanna -> {fxLeikmadur1.setText(nyrInnskraning1.getNafn1());
-            KubbaKappApplication.setLoggedInLeikmadur1(nofnLeikmanna);
-
-        });*/
-
-
-      /*  Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-
-        stage.setTitle("KubbaKapp");
-        stage.setScene(scene);
-        stage.show();
-        Stage nuverandiStage = (Stage) fxByrjaLeik.getScene().getWindow();
-        nuverandiStage.close();*/
     }
 
     /**

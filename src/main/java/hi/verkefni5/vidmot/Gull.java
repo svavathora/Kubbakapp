@@ -14,7 +14,7 @@ public class Gull extends Pane {
     private ImageView imageView;
 
     /**
-     * Smiður fyrir gullmola, skráin lesinn inn og gullið smíðað
+     * Smiður fyrir kassa, skráin lesinn inn og kassarnir smíðaðir í handahófskenndum lit
      */
     public Gull() {
         FXML_Lestur.lesa(this, "gull-view.fxml");
