@@ -3,15 +3,12 @@ package hi.verkefni5.vidmot;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -40,22 +37,22 @@ public class UpphafsmyndController {
     /**
      * Þegar upphafsmyndin keyrð þá er náð í nöfn notanda
      */
-    public void initialize(){
+    public void initialize() {
         Innskraning innskraning1 = KubbaKappApplication.getLoggedInLeikmadur1();
-        if(innskraning1 != null) {
+        if (innskraning1 != null) {
             fxLeikmadur1.setText(innskraning1.getNafn1());
         }
         Innskraning innskraning2 = KubbaKappApplication.getLoggedInLeikmadur2();
-        if(innskraning2 != null) {
+        if (innskraning2 != null) {
             fxLeikmadur2.setText(innskraning2.getNafn2());
         }
     }
 
 
-
     /**
      * Þegar ýtt er á Byrja leik þá kemur upp dialog fyrir notanda að skrá sig inn með nöfnum
      * Þegar búið er að skýra notendur þá getur notandi hafið leik og spilaborðið kemur upp
+     *
      * @param actionEvent ýtt á byrja leik takkann
      * @throws IOException
      */
@@ -111,6 +108,21 @@ public class UpphafsmyndController {
             e.printStackTrace();
         }
 
+    }
+
+    @FXML
+    private void onUmForritid(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Um forritið");
+        alert.setHeaderText("KubbaKapp");
+        alert.setContentText("KubbaKapp er leikur þar sem tveir leikmenn keppast um að safna stigum á vissum tíma. \n" +
+                "Tíminn fer eftir erfileikastigi (létt, miðlungs, erfitt) sem hægt er að velja í stillingum. \n" +
+                "Hafa skal varann á sprengjum sem birtast af og til, ef leikmaður rekst á sprengju missir hann 1 af 3 lífum. " +
+                "Ef öll líf klárast tapar sá leikmaður leiknum. \n" + "Stigum eru safnað með því að ná kubbum sem, líkt og sprengjurnar, birtast á leikskjánnum. \n" +
+                "\n" + "Þegar sigri er náð birtist gluggi sem hefur valmöguleika á að hefja nýjan leik eða hætta.\n" +
+                " \n" +
+                "KubbaKappar smíðuðu þetta forrit.");
+        alert.showAndWait();
     }
 
 }
