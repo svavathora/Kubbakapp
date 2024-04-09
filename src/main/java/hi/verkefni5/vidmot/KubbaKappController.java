@@ -8,7 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -17,9 +19,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import vinnsla.Erfidleikaval;
+import vinnsla.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -92,9 +96,9 @@ public class KubbaKappController {
     }
 
     public static KubbaKappController getInstance() {
-        if (instance == null) {
-            throw new IllegalStateException("GoldController instance not yet initialized.");
-        }
+        //if (instance == null) {
+            //throw new IllegalStateException("GoldController instance not yet initialized.");
+        //}
         return instance;
     }
 
@@ -158,13 +162,31 @@ public class KubbaKappController {
     public void onStillingar(ActionEvent actionEvent) throws IOException {
         pause();
 
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("valmynd-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 202, 300);
-        stage.setScene(scene);
-        stage.show();
+        Stage primaryStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("valmynd-view.fxml"));
+            VBox content = fxmlLoader.load();
+            Dialog<Void> dialog = new Dialog<>();
+
+
+            DialogPane dialogPane = new DialogPane();
+            dialogPane.setContent(content);
+            dialog.setDialogPane(dialogPane);
+
+            dialog.initOwner(primaryStage);
+            dialog.initModality(Modality.APPLICATION_MODAL);
+
+            dialog.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
+
 
     /**
      * Orvatakkarnir stilltir og tengdir við leikborðið

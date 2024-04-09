@@ -4,8 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
@@ -38,8 +43,8 @@ public class UpphafsmyndController {
 
     private KubbaKappController kubbaKappController;
 
-    public void initialize(){ //vil setja mynd á stillingarnar-sunna
-        System.out.println("Initialize UpphafsmyndController");
+    public void initialize(){
+        System.out.println("Initialize NyrLeikurController");
         Innskraning innskraning1 = KubbaKappApplication.getLoggedInLeikmadur1();
         if(innskraning1 != null) {
             fxLeikmadur1.setText(innskraning1.getNafn1());
@@ -117,11 +122,30 @@ public class UpphafsmyndController {
      */
     @FXML
     public void onStillingar(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("valmynd-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 202, 300);
-        stage.setScene(scene);
-        stage.show();
+
+        Stage primaryStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("valmynd-view.fxml"));
+            VBox content = fxmlLoader.load();
+            Dialog<Void> dialog = new Dialog<>();
+
+
+            DialogPane dialogPane = new DialogPane();
+            dialogPane.setContent(content);
+            dialog.setDialogPane(dialogPane);
+
+            dialog.initOwner(primaryStage);
+            dialog.initModality(Modality.APPLICATION_MODAL);
+
+
+
+            dialog.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
