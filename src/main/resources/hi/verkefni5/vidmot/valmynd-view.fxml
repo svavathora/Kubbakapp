@@ -12,28 +12,40 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="nyrLeikur" onAction="#onNyrLeikur" cache="true" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Nýr leikur">
+      <Button fx:id="fxNyrLeikur" cache="true" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" onAction="#onNyrLeikur" text="Nýr leikur">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
-      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Hætta" onAction="#onHaetta">
+      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" onAction="#onHaetta" text="Hætta">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
-      <Button fx:id="fxErfidleiki" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Erfiðleikastig" onAction="#onErfidleikastig">
+      <Button fx:id="fxErfidleiki" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" onAction="#onErfidleikastig" text="Erfiðleikastig">
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Button>
-      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Um leikinn" onAction="#onUmForritid"/>
-      <Button fx:id="fxAfram" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Halda áfram" onAction="#onHaldaAfram" />
-      <RadioButton fx:id="fxHljod" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" text="Hljóð á" selected="true">
-         <VBox.margin>
-            <Insets left="5.0" />
-         </VBox.margin>
-      </RadioButton>
+      <Button minHeight="40.0" minWidth="200.0" mnemonicParsing="false" onAction="#onUmForritid" text="Um leikinn" />
+      <Button fx:id="fxAfram" minHeight="40.0" minWidth="200.0" mnemonicParsing="false" onAction="#onHaldaAfram" text="Halda áfram" />
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <RadioButton fx:id="fxHljod" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Hljóð" selected="true">
+               <HBox.margin>
+                  <Insets left="4.0" />
+               </HBox.margin>
+            </RadioButton>
+            <Button fx:id="fxTilBaka" minHeight="15.0" minWidth="60.0" mnemonicParsing="false" onAction="#onTilBaka" text="Til baka">
+               <HBox.margin>
+                  <Insets left="25.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
    </children>
    <padding>
       <Insets top="7.0" />

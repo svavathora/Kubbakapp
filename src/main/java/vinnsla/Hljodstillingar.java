@@ -5,10 +5,12 @@ import javafx.beans.property.SimpleBooleanProperty;
 public class Hljodstillingar {
 
     //tilviksbreytur
-    private static final Hljodstillingar hljodstillingar = new Hljodstillingar();
+    private static Hljodstillingar hljodstillingar;
 
     //default er að kveikt sé á hljóðinu
-    private BooleanProperty hljodKveikt = new SimpleBooleanProperty(true);
+    private boolean hljodKveikt = true;
+
+    private BooleanProperty hljodKveiktProperty = new SimpleBooleanProperty(true);;
 
     /**
      * tómur smiður
@@ -20,6 +22,9 @@ public class Hljodstillingar {
      * @return
      */
     public static Hljodstillingar getHljodstillingar() {
+        if (hljodstillingar == null) {
+            hljodstillingar = new Hljodstillingar();
+        }
         return hljodstillingar;
     }
 
@@ -28,15 +33,15 @@ public class Hljodstillingar {
      * @return true ef kveikt er á hljóðinu
      */
     public boolean erHljodKveikt() {
-        return hljodKveikt.get();
+        return hljodKveiktProperty.get();
     }
 
     /**
      * Setter fyrir boolean breytuna erHljodKveikt sem segir til um hvort kveikt sé á hljóðinu
-     * @param hljodKveikt segir true ef kveikt er á hljóðinu
+     * @param kveikt segir true ef kveikt er á hljóðinu
      */
-    public void kveikjaAHljodi(boolean hljodKveikt) {
-        this.hljodKveikt.set(hljodKveikt);
+    public void kveikjaAHljodi(boolean kveikt) {
+        hljodKveiktProperty.set(kveikt);
     }
 
     /**
@@ -44,6 +49,6 @@ public class Hljodstillingar {
      * @return skilar true ef kveikt er á hljóðinu
      */
     public BooleanProperty hljodKveiktProperty() {
-        return hljodKveikt;
+        return hljodKveiktProperty;
     }
 }

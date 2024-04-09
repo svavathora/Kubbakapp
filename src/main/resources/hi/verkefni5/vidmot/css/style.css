@@ -20,5 +20,13 @@
         -fx-background-repeat: no-repeat;
 }
 
+#fxStillingar {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
+
 
 

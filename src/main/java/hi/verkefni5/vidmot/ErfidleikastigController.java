@@ -7,7 +7,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import vinnsla.DifficultyModel;
+import vinnsla.Erfidleikaval;
 
 import java.io.IOException;
 
@@ -28,26 +28,25 @@ public class ErfidleikastigController {
     @FXML
     private RadioButton stig3;
 
-    private DifficultyModel difficultyModel = DifficultyModel.getInstance();
+    private Erfidleikaval erfidleikaval = Erfidleikaval.getValNotanda();
 
-    public void setDifficultyModel(DifficultyModel model) {
-        this.difficultyModel = model;
-        //initialize(); // Re-initialize to update based on model
+    public void setDifficultyModel(Erfidleikaval model) {
+        this.erfidleikaval = model;
     }
 
     @FXML
     private void onErfidleikastig() {
-        DifficultyModel difficultyModel = DifficultyModel.getInstance();
+        Erfidleikaval erfidleikaval = Erfidleikaval.getValNotanda();
         Toggle selectedToggle = fxErfidleikastig.getSelectedToggle();
         if (selectedToggle != null) {
             RadioButton selectedRadioButton = (RadioButton) selectedToggle;
-            difficultyModel.setDifficulty(selectedRadioButton.getText());
+            erfidleikaval.setErfidleiki(selectedRadioButton.getText());
         }
     }
 
     @FXML
     public void initialize() {
-        String currentDifficulty = DifficultyModel.getInstance().getDifficulty();
+        String currentDifficulty = Erfidleikaval.getValNotanda().getErfidleiki();
         switch (currentDifficulty) {
             case "Auðvelt":
                 stig1.setSelected(true);

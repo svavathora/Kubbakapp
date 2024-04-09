@@ -1,6 +1,5 @@
 package hi.verkefni5.vidmot;
 
-import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -12,9 +11,6 @@ public class Grafari extends Pane {
     // TIlviksbreytur
     private Stefna nuverandiStefna;
     private ImageView imageView;
-    @FXML
-    private Leikbord leikbord;
-
     private Image blueUp = getImage("/media/blueUp.png");
     private Image blueDown = getImage("/media/blueDown.png");
     private Image blueRight = getImage("/media/blueRight.png");
@@ -39,11 +35,10 @@ public class Grafari extends Pane {
         this.setLayoutY(50);
 
     }
-    private Image getImage(String urlS){
+    public Image getImage(String urlS){
         URL url = getClass().getResource(urlS);
         assert url != null;
         return new Image(url.toExternalForm());
-
     }
 
     /**
@@ -69,4 +64,12 @@ public class Grafari extends Pane {
         return nuverandiStefna;
     }
 
+    public void myndirSamkvæmtStefnu(Stefna stefna) {
+        switch (stefna) {
+            case UPP -> imageView.setImage(blueUp);
+            case NIDUR -> imageView.setImage(blueDown);
+            case HAEGRI -> imageView.setImage(blueRight);
+            case VINSTRI -> imageView.setImage(blueLeft);
+        }
+    }
 }

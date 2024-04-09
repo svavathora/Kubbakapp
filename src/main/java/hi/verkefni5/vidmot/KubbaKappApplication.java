@@ -8,20 +8,17 @@ import vinnsla.Innskraning;
 
 import java.io.IOException;
 
-public class GoldApplication extends Application {
+public class KubbaKappApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
-
-        FXMLLoader fxmlLoader = new FXMLLoader(GoldApplication.class.getResource("upphafsmynd-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("upphafsmynd-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setTitle("KubbaKapp");
         stage.setScene(scene);
         stage.show();
 
     }
-
     private static Innskraning loggedInLeikmadur1;
 
     private static Innskraning loggedInLeikmadur2;
@@ -40,10 +37,10 @@ public class GoldApplication extends Application {
 
 
     public static void setLoggedInLeikmadur1(Innskraning innskraning1) {
-        GoldApplication.loggedInLeikmadur1 = innskraning1;
+        KubbaKappApplication.loggedInLeikmadur1 = innskraning1;
     }
 
     public static void setLoggedInLeikmadur2(Innskraning innskraning2) {
-        GoldApplication.loggedInLeikmadur2 = innskraning2;
+        KubbaKappApplication.loggedInLeikmadur2 = innskraning2;
     }
 }

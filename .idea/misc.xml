@@ -17,19 +17,12 @@
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
-    <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_20" project-jdk-name="temurin-21" project-jdk-type="JavaSDK">
+<<<<<<< HEAD
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_18" project-jdk-name="temurin-21" project-jdk-type="JavaSDK">
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK">
+>>>>>>> 937b907c829d47352f6e214efbe97f6bc727f820
     <output url="file://$PROJECT_DIR$/out" />
-  </component>
-  <component name="SaveActionSettings">
-    <option name="actions">
-      <set>
-        <option value="activate" />
-        <option value="organizeImports" />
-        <option value="reformat" />
-      </set>
-    </option>
-    <option name="configurationPath" value="" />
   </component>
 </project>
