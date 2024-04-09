@@ -27,6 +27,26 @@ public class Gull extends Pane {
         Color randomColor = Color.rgb(r,g,b);
 
         this.setBackground(new Background(new BackgroundFill(randomColor, null, null)));
+
+
+        /*
+        imageView = new ImageView();
+        imageView.setFitWidth(50);
+        imageView.setFitHeight(50);
+
+
+        URL url = getClass().getResource("/media/mynd2.png");
+        if (url != null) {
+            Image image = new Image(url.toExternalForm());
+            imageView.setImage(image);
+        } else {
+            System.err.println("Skráin fannst ekki: " + "/media/mynd2.png");
+        }
+
+        this.getChildren().add(imageView);
+
+         */
+
     }
 
 }
