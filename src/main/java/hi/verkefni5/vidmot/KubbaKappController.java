@@ -11,6 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -23,6 +27,9 @@ import vinnsla.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import vinnsla.Hljodstillingar;
+import vinnsla.Klukka;
+import vinnsla.Leikur;
 
 import java.io.IOException;
 import java.net.URL;
@@ -37,6 +44,18 @@ public class KubbaKappController {
     private ImageView hjortu2;
     @FXML
     private ImageView hjortu1;
+
+    //viðmótstilviksbreytur
+
+    private MediaPlayer mediaPlayer;
+
+    private ErfidleikastigController erfidleikastigController = new ErfidleikastigController();
+
+    @FXML
+    private Label fxLeikmadur1;
+
+    @FXML
+    private Label fxLeikmadur2;
     @FXML
     private Label fxStig;
     @FXML
@@ -67,7 +86,7 @@ public class KubbaKappController {
     private Timeline sprengjuTimeline;
     private EventHandler<KeyEvent> hreyfing;
     private EventHandler<KeyEvent> hreyfing2;
-    private MediaPlayer mediaPlayer;
+
     private Erfidleikaval erfidleikaval = Erfidleikaval.getValNotanda();
     private Hljodstillingar hljodstillingar = Hljodstillingar.getHljodstillingar();
     private static KubbaKappController instance;
@@ -555,4 +574,9 @@ public class KubbaKappController {
                 }
             });
         }
-}
+
+        public void setLeikmennNofn(String nafn1, String nafn2){
+            fxLeikmadur1.setText(nafn1);
+            fxLeikmadur2.setText(nafn2);
+        }
+    }

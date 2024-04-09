@@ -3,6 +3,7 @@ package hi.verkefni5.vidmot;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import vinnsla.Innskraning;
 
 import java.io.IOException;
@@ -55,30 +57,28 @@ public class UpphafsmyndController {
     //fer þá önnur fxml skrá i staðin fyrir goldrush-view, en var bara að sjá hvort virkaði -sunna
     @FXML
     public void onByrjaLeik(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("goldrush-view.fxml"));
-
-        Innskraning nyrInnskraning1 = new Innskraning("", "");
-        Innskraning nyrInnskraning2 = new Innskraning("", "");
-        InnskraningDialog dialog = new InnskraningDialog(nyrInnskraning1, nyrInnskraning2);
+        InnskraningDialog dialog = new InnskraningDialog();
         dialog.initModality(Modality.APPLICATION_MODAL);
-        Optional<Innskraning> result = dialog.showAndWait();
+        dialog.initOwner(fxByrjaLeik.getScene().getWindow());
+        Optional<Pair<String, String>> result = dialog.showAndWait();
 
-        result.ifPresent(innskraning1 -> {fxLeikmadur1.setText(nyrInnskraning1.getNafn1());
-            KubbaKappApplication.setLoggedInLeikmadur1(innskraning1);
+        if (result.isPresent()) {
+            Pair<String, String> playerNames = result.get();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("goldrush-view.fxml"));
+            Parent root = fxmlLoader.load();
 
-        });
-        result.ifPresent(innskraning2 -> {fxLeikmadur2.setText(nyrInnskraning2.getNafn2());
-            KubbaKappApplication.setLoggedInLeikmadur2(innskraning2);
-        });
+            KubbaKappController controller = fxmlLoader.getController();
+            controller.setLeikmennNofn(playerNames.getKey(), playerNames.getValue());
 
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+            Stage stage = new Stage();
+            stage.setTitle("KubbaKapp");
+            stage.setScene(new Scene(root));
+            stage.show();
 
-        stage.setTitle("KubbaKapp");
-        stage.setScene(scene);
-        stage.show();
-        Stage nuverandiStage = (Stage) fxByrjaLeik.getScene().getWindow();
-        nuverandiStage.close();
+
+            ((Stage) fxByrjaLeik.getScene().getWindow()).close();
+        }
+
     }
 
     /**
