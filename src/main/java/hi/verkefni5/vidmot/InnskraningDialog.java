@@ -6,38 +6,44 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
-import vinnsla.Askrifandi;
+import vinnsla.Innskraning;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-public class AskrifandiDialog extends Dialog<Askrifandi> {
+public class InnskraningDialog extends Dialog<Innskraning> {
 
     //Tilviksbreytur
-    private Askrifandi askrifandi1;
-    private Askrifandi askrifandi2;
+    private Innskraning innskraning1;
+    private Innskraning innskraning2;
     @FXML
     private TextField fxNafnLeikmanns1;
     @FXML
     private TextField fxNafnLeikmanns2;
 
-    public AskrifandiDialog(Askrifandi askrifandi1, Askrifandi askrifandi2) {
-        this.askrifandi1 = askrifandi1;
-        this.askrifandi2 = askrifandi2;
+    public InnskraningDialog(Innskraning innskraning1, Innskraning innskraning2) {
+        this.innskraning1 = innskraning1;
+        this.innskraning2 = innskraning2;
         setDialogPane(lesaDialog());
-        setResultConverter();
+        setResultConverter1();
+        setResultConverter2();
     }
 
-    private void setResultConverter() {
+    private void setResultConverter1() {
         setResultConverter(b -> {
             if (b.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                askrifandi1.setNafn1(fxNafnLeikmanns1.getText());
-                askrifandi2.setNafn2(fxNafnLeikmanns2.getText());
-                List<Object> askrifendur = new ArrayList<>();
-                askrifendur.add(askrifandi1);
-                askrifendur.add(askrifandi2);
-                return (Askrifandi) askrifendur;
+                innskraning1.setNafn1(fxNafnLeikmanns1.getText());
+                return innskraning1;
+            } else {
+                return null;
+            }
+        });
+    }
+
+    private void setResultConverter2() {
+        setResultConverter(b -> {
+            if (b.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                innskraning2.setNafn2(fxNafnLeikmanns2.getText());
+                return innskraning2;
             } else {
                 return null;
             }
@@ -45,7 +51,7 @@ public class AskrifandiDialog extends Dialog<Askrifandi> {
     }
 
     private DialogPane lesaDialog() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("askrifandi-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("innskraning-view.fxml"));
         try {
             fxmlLoader.setController(this);
             return fxmlLoader.load();

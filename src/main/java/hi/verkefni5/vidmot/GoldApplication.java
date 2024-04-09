@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import vinnsla.Innskraning;
 
 import java.io.IOException;
 
@@ -19,5 +20,30 @@ public class GoldApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    private static Innskraning loggedInLeikmadur1;
+
+    private static Innskraning loggedInLeikmadur2;
+
+    /**
+     * getter fyrir innskráðan áskrifanda
+     * @return innskráður áskrifandi
+     */
+    public static Innskraning getLoggedInLeikmadur1() {
+        return loggedInLeikmadur1;
+    }
+
+    public static Innskraning getLoggedInLeikmadur2() {
+        return loggedInLeikmadur2;
+    }
+
+
+    public static void setLoggedInLeikmadur1(Innskraning innskraning1) {
+        GoldApplication.loggedInLeikmadur1 = innskraning1;
+    }
+
+    public static void setLoggedInLeikmadur2(Innskraning innskraning2) {
+        GoldApplication.loggedInLeikmadur2 = innskraning2;
     }
 }

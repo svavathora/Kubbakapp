@@ -27,6 +27,6 @@
     <headerText>
         Innskráning
     </headerText>
-    <ButtonType fx:id="fxILagi" buttonData="OK_DONE" text="Í lagi" />
+    <ButtonType fx:id="fxHefjaLeik" buttonData="OK_DONE" text="Hefja leik" />
     <ButtonType fx:id="fxHaettaVid" buttonData="CANCEL_CLOSE" text="Hætta við" />
 </DialogPane>

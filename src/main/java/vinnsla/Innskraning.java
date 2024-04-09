@@ -1,11 +1,11 @@
 package vinnsla;
 
-public class Askrifandi {
+public class Innskraning {
 
     private String nafn1;
     private String nafn2;
 
-    public Askrifandi(String nafn1, String nafn2) {
+    public Innskraning(String nafn1, String nafn2) {
         this.nafn1 = nafn1;
         this.nafn2 = nafn2;
     }
@@ -20,9 +20,7 @@ public class Askrifandi {
 
     public void setNafn1(String nafn1) {
         this.nafn1 = nafn1;
-        this.nafn2 = nafn2;
     }
-
     public void setNafn2(String nafn2) {
         this.nafn2 = nafn2;
     }
