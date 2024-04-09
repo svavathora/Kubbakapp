@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<DialogPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" >
+    <children>
+    </children>
+    <content>
+        <VBox maxHeight="200.0" maxWidth="300.0" prefHeight="200.0" prefWidth="300.0">
+            <children>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                    <children>
+                        <Label text="Leikmaður 1" />
+                        <TextField fx:id="fxNafnLeikmanns1" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                    <children>
+                        <Label text="Leikmaður 2" />
+                        <TextField fx:id="fxNafnLeikmanns2" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </content>
+    <headerText>
+        Innskráning
+    </headerText>
+    <ButtonType fx:id="fxHefjaLeik" buttonData="OK_DONE" text="Hefja leik" />
+    <ButtonType fx:id="fxHaettaVid" buttonData="CANCEL_CLOSE" text="Hætta við" />
+</DialogPane>
