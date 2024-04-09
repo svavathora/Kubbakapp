@@ -117,6 +117,8 @@ public class UpphafsmyndController {
         alert.setHeaderText("KubbaKapp");
         alert.setContentText("KubbaKapp er leikur þar sem tveir leikmenn keppast um að safna stigum á vissum tíma. \n" +
                 "Tíminn fer eftir erfileikastigi (létt, miðlungs, erfitt) sem hægt er að velja í stillingum. \n" +
+                "Leikmaður 1 notar A,W,S,D til þess að hreyfa sig á leikborðinu.\n"+
+                "Leikmaður 2 notar örvatakkana til þess að hreyfa sig á leikborðinu. \n"+
                 "Hafa skal varann á sprengjum sem birtast af og til, ef leikmaður rekst á sprengju missir hann 1 af 3 lífum. " +
                 "Ef öll líf klárast tapar sá leikmaður leiknum. \n" + "Stigum eru safnað með því að ná kubbum sem, líkt og sprengjurnar, birtast á leikskjánnum. \n" +
                 "\n" + "Þegar sigri er náð birtist gluggi sem hefur valmöguleika á að hefja nýjan leik eða hætta.\n" +
