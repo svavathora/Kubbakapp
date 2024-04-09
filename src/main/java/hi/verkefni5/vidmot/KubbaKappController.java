@@ -452,21 +452,24 @@ public class KubbaKappController {
          */
         public void spilaLag () {
             if (!hljodstillingar.erHljodKveikt()) {
-                return; // Ekki spila ef slökkt er á hljóði
+                return;
             }
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-                mediaPlayer.dispose();
-            }
-            URL mediaUrl = getClass().getResource("/media/lag.mp3");
-            if (mediaUrl != null) {
-                Media media = new Media(mediaUrl.toExternalForm());
-                mediaPlayer = new MediaPlayer(media);
-                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                //mediaPlayer.setStopTime(new Duration(this.timi * 1000));
+
+            if (mediaPlayer != null && !mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
                 mediaPlayer.play();
-            } else {
-                System.err.println("Skráin fannst ekki: media/lag.mp3");
+                return;
+            }
+
+            if (mediaPlayer == null) {
+                URL mediaUrl = getClass().getResource("/media/lag.mp3");
+                if (mediaUrl != null) {
+                    Media media = new Media(mediaUrl.toExternalForm());
+                    mediaPlayer = new MediaPlayer(media);
+                    mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                    mediaPlayer.play();
+                } else {
+                    System.err.println("Skráin fannst ekki: media/lag.mp3");
+                }
             }
         }
 
@@ -476,7 +479,6 @@ public class KubbaKappController {
         public void stoppaLag(){
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
-                mediaPlayer.dispose();
             }
         }
 

@@ -35,8 +35,16 @@ public class ValmyndController {
      * Þegar valmyndin er opnuð er kveikt á listener á milli fxHljod takkans og hljóðsins í Hljóðstillingaklasanum
      */
     public void initialize() {
-       fxHljod.selectedProperty().addListener((obs, varValid, erValid) -> {
-            Hljodstillingar.getHljodstillingar().kveikjaAHljodi(erValid);
+        boolean erKveikt = Hljodstillingar.getHljodstillingar().erHljodKveikt();
+        fxHljod.setSelected(erKveikt); // Make sure your UI component reflects the actual setting
+
+        fxHljod.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+            Hljodstillingar.getHljodstillingar().kveikjaAHljodi(isSelected);
+            if (isSelected) {
+                KubbaKappController.getInstance().spilaLag();
+            } else {
+                KubbaKappController.getInstance().stoppaLag();
+            }
         });
     }
 
