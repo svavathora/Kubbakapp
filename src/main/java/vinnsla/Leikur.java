@@ -6,7 +6,6 @@ public class Leikur {
 
     //porperty tilviksbreytur
     private  SimpleIntegerProperty stig = new SimpleIntegerProperty(0);
-
     private SimpleIntegerProperty lif = new SimpleIntegerProperty(3);
 
     /**
@@ -54,6 +53,10 @@ public class Leikur {
         this.lif.set(this.getLif()-1);
     }
 
+    /**
+     * getter fyrir líf property breytuna
+     * @return
+     */
     public SimpleIntegerProperty getLifProperty() {
         return lif;
     }

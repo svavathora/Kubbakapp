@@ -22,7 +22,6 @@ public class Leikbord extends Pane {
      * Smiðurinn, fxml skráin lesin inn
      */
     public Leikbord() {
-        System.out.println(this.idProperty());
         FXML_Lestur.lesa(this, "leikbord-view.fxml");
     }
 
@@ -46,7 +45,7 @@ public class Leikbord extends Pane {
     }
 
     /**
-     * Kallar á setterinn fyrir grafarann og svo áfram fallið
+     * Kallar á setterinn fyrir leikmaninn og svo áfram fallið
      *
      * @param stefna stefna
      */
@@ -103,7 +102,6 @@ public class Leikbord extends Pane {
             }
 
             if (erRekstASprengju()) {
-                System.out.println("breyti mynd um líf" + this.leikur);
                 leikur.laekkaLif();
                 sprengjuArekstur();
             }
@@ -169,7 +167,7 @@ public class Leikbord extends Pane {
 
 
     /**
-     * fjarlægir gullmola af borðinu
+     * fjarlægir kassa og sprengjur af borðinu
      */
     public void clear() {
         getChildren().removeIf(node -> node instanceof Gull);
@@ -179,7 +177,7 @@ public class Leikbord extends Pane {
     }
 
     /**
-     * setur grafara í upphafsstöðu
+     * setur leikmann í upphafsstöðu
      */
     public void upphafsstillaGrafara() {
         if(fxGrafari != null) {
@@ -228,7 +226,6 @@ public class Leikbord extends Pane {
         for (Sprengja sprengja : sprengjuListi) {
             if (fxGrafari.getBoundsInParent().intersects(sprengja.getBoundsInParent())) {
                 //Sprengju animation
-                System.out.println("sprengjuhljoð");
                 sprengja.spilaHljod();
                 sprengja.boom();
                 sprengjuListi.remove(sprengja);
@@ -250,6 +247,4 @@ public class Leikbord extends Pane {
         }
         return false;
     }
-
-
 }

@@ -11,7 +11,6 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import vinnsla.Innskraning;
@@ -42,7 +41,6 @@ public class UpphafsmyndController {
     private KubbaKappController kubbaKappController;
 
     public void initialize(){
-        System.out.println("Initialize NyrLeikurController");
         Innskraning innskraning1 = KubbaKappApplication.getLoggedInLeikmadur1();
         if(innskraning1 != null) {
             fxLeikmadur1.setText(innskraning1.getNafn1());
@@ -57,7 +55,6 @@ public class UpphafsmyndController {
     //fer þá önnur fxml skrá i staðin fyrir goldrush-view, en var bara að sjá hvort virkaði -sunna
     @FXML
     public void onByrjaLeik(ActionEvent actionEvent) throws IOException {
-        System.out.println("Byrjum Leik");
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("goldrush-view.fxml"));
 

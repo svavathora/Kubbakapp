@@ -48,9 +48,6 @@ public class ValmyndController {
         });
     }
 
-    /**
-     * Þegar erfiðleikastig er valið
-     */
 
     /**
      * Nýr leikur er hafinn
@@ -77,6 +74,10 @@ public class ValmyndController {
     }
 
 
+    /**
+     * Leikurinn ræstur aftur ef hann var í gangi, annars birtist viðeigandi tilkynning á takkanum
+     * @param actionEvent ýtt á halda áfram
+     */
     @FXML
     private void onHaldaAfram(ActionEvent actionEvent){
         try {
@@ -86,11 +87,6 @@ public class ValmyndController {
             fxAfram.setText("Enginn leikur í gangi");
         }
     }
-
-
-
-
-
 
     /**
      * Alert dialog sem spyr hvort notandinn vilji hætta leik
@@ -129,7 +125,7 @@ public class ValmyndController {
         alert.setContentText("KubbaKapp er leikur þar sem tveir leikmenn keppast um að safna stigum á vissum tíma. \n" +
                 "Tíminn fer eftir erfileikastigi (létt, miðlungs, erfitt) sem hægt er að velja í stillingum. \n" +
                 "Hafa skal varann á sprengjum sem birtast af og til, ef leikmaður rekst á sprengju missir hann 1 af 3 lífum. " +
-                "Ef öll líf klárast tapar sá hin sami leiknum. \n" + "Stig eru söfnuð með að ná kubbum, sem líkt og sprengjurnar birtast á leikskjánnum. \n" +
+                "Ef öll líf klárast tapar sá leikmaður leiknum. \n" + "Stigum eru safnað með því að ná kubbum sem, líkt og sprengjurnar, birtast á leikskjánnum. \n" +
                 "\n" + "Þegar sigri er náð birtist gluggi sem hefur valmöguleika á að hefja nýjan leik eða hætta.\n" +
                 " \n" +
                 "KubbaKappar smíðuðu þetta forrit.");
@@ -152,35 +148,29 @@ public class ValmyndController {
         stage.show();
     }
 
-
+    /**
+     * Leikurinn ræstur aftur ef hann var í gangi, annars færist notandi aftur á heimasvæði
+     * @param actionEvent ýtt á halda áfram
+     */
     @FXML
     private void onTilBaka(ActionEvent actionEvent){
         if (KubbaKappController.getInstance() != null) {
             KubbaKappController.getInstance().resume();
             lokaNuverandiGlugga(actionEvent);
         } else {
-            System.out.println("Enginn leikur í gangi");
             lokaNuverandiGlugga(actionEvent);
         }
     }
 
 
-
-
+    /**
+     * Lokar núverandi glugga
+     * @param actionEvent
+     */
     private void lokaNuverandiGlugga(ActionEvent actionEvent) {
         Button sourceButton = (Button) actionEvent.getSource();
         Stage currentStage = (Stage) sourceButton.getScene().getWindow();
         currentStage.close();
-    }
-
-    /**
-     * setter
-     *
-     * @param kubbaKappController
-     */
-    public void setGoldController(KubbaKappController kubbaKappController) {
-        this.kubbaKappController = kubbaKappController;
-        //Hljodstillingar.getHljodstillingar().kveikjaAHljodi(fxHljod.isSelected());
     }
 
     public static void main(String[] args) {

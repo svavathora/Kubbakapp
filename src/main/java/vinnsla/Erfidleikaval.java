@@ -4,26 +4,43 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Erfidleikaval {
+
+    //tilviksbreytur frumstilltar
     private static final Erfidleikaval valNotanda = new Erfidleikaval();
 
     private StringProperty erfidleiki = new SimpleStringProperty("Auðvelt"); // Default difficulty
 
-    // Private constructor prevents instantiation from outside the class
+    // tómur smiður
     private Erfidleikaval() {}
 
-    // Public method to access the singleton instance
+    /**
+     * Getter fyrir val notanda
+     * @return
+     */
     public static Erfidleikaval getValNotanda() {
         return valNotanda;
     }
 
+    /**
+     * getter fyrir erfiðleikastig
+     * @return
+     */
     public String getErfidleiki() {
         return erfidleiki.get();
     }
 
+    /**
+     * setter fyrir erfiðleikastigið
+     * @param erfidleiki
+     */
     public void setErfidleiki(String erfidleiki) {
         this.erfidleiki.set(erfidleiki);
     }
 
+    /**
+     * property breyta fyrir erfiðleikastigið
+     * @return
+     */
     public StringProperty erfidleikiProperty() {
         return erfidleiki;
     }

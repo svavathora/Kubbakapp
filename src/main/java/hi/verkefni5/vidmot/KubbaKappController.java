@@ -30,20 +30,13 @@ import java.util.HashMap;
 import java.util.Optional;
 
 public class KubbaKappController {
-    //lif leikmanna
+
+    //viðmótstilviksbreytur
+
     @FXML
     private ImageView hjortu2;
     @FXML
     private ImageView hjortu1;
-
-
-    //viðmótstilviksbreytur
-
-    private MediaPlayer mediaPlayer;
-
-    private ErfidleikastigController erfidleikastigController = new ErfidleikastigController();
-
-
     @FXML
     private Label fxStig;
     @FXML
@@ -55,6 +48,7 @@ public class KubbaKappController {
     @FXML
     private Leikbord fxLeikbord2;
 
+    //final tilviksbreytur
     // Býr til beinan aðgang frá KeyCode og í heiltölu. Hægt að nota til að fletta upp
     // heiltölu fyrir KeyCode
     private static final HashMap<KeyCode, Stefna> map1 = new HashMap<KeyCode, Stefna>();
@@ -72,35 +66,37 @@ public class KubbaKappController {
     private Timeline klukkuTimeline;
     private Timeline sprengjuTimeline;
     private EventHandler<KeyEvent> hreyfing;
-
     private EventHandler<KeyEvent> hreyfing2;
-
+    private MediaPlayer mediaPlayer;
     private Erfidleikaval erfidleikaval = Erfidleikaval.getValNotanda();
-
     private Hljodstillingar hljodstillingar = Hljodstillingar.getHljodstillingar();
-
     private static KubbaKappController instance;
 
+    /**
+     * smiður sem stillir tilviksbreytuna
+     */
     public KubbaKappController() {
         instance = this;
     }
 
+    /**
+     * getter fyrir tilviksbreytuna
+     * @return
+     */
     public static KubbaKappController getInstance() {
-        //if (instance == null) {
-            //throw new IllegalStateException("GoldController instance not yet initialized.");
-        //}
         return instance;
     }
 
     /**
-     * Þegar forritið er ræst fer þetta í gang
-     * Leikborðið er vikrjað og leikur stilltur fyrir það
+     * Þegar leikur er hafinn fer þetta í gang
+     * Hljóðstillingar eru settar í gang með hlustara
+     * Erfiðleikaval er sett í gang með hlustara
+     * Leikborðin eru virkjuð og leikur stilltur fyrir það
      * Tíminn er stilltur
-     * Leikborðið fær fókus og er tengt við örvatakka fallið
-     * Leikur hafinn og klukka ræst og stigin og tíminn eru tengd viðmót við property breytur
+     * Leikborðin fá fókus og eru tengd við örvatakka fallið
+     * Leikur hafinn og klukka ræst og stigin, lífin og tíminn eru tengd viðmót við property breytur
      */
     public void initialize() {
-        System.out.println("Initialize goldController");
         erfidleikaval.erfidleikiProperty().addListener((obs, oldDifficulty, newDifficulty) -> {
             System.out.println("New difficulty is: " + newDifficulty);
         });
@@ -122,10 +118,7 @@ public class KubbaKappController {
         fxLeikbord2.setLeikur(leikur2);
 
         String timi = erfidleikaval.getErfidleiki();
-
         stillaTima(timi);
-
-
         spilaLag();
         Platform.runLater(() -> fxLeikbord1.requestFocus());
         Platform.runLater(() -> fxLeikbord2.requestFocus());
@@ -146,14 +139,15 @@ public class KubbaKappController {
         raesaKlukku();
         hefjaLeik();
         fxTimi.textProperty().bind(Bindings.concat(klukka.getKlukkaProperty().asString(), " sek"));
-
-
-
     }
 
 
-
-
+    /**
+     * Þegar ýtt er á stillingar pásast leikurinn og upp poppar valmyndarglugginn (dialog) sem lokast ekki
+     * nema ýtt sé á halda áfram eða til baka
+     * @param actionEvent ýtt á stillingar myndina
+     * @throws IOException
+     */
     @FXML
     public void onStillingar(ActionEvent actionEvent) throws IOException {
         pause();
@@ -202,6 +196,9 @@ public class KubbaKappController {
         });
     }
 
+    /**
+     * Orvatakkarnir stilltir og tengdir við leikborðið
+     */
     public void orvatakkar2() {
         map2.put(KeyCode.W, Stefna.UPP);
         map2.put(KeyCode.S, Stefna.NIDUR);
@@ -220,7 +217,8 @@ public class KubbaKappController {
     /**
      * Leikur hafinn
      * Búinn til keyframe svo hægt sé að kalla á meiraGull aðferðina á sekúndu fresti
-     * Ný tímalína búin til
+     * Búinn til keyframe svo hægt sé að kalla á meiriSprengjur aðferðina á 5 sekúndna fresti
+     * Nýjar tímalínur búnar til fyrir gullið og sprengjurnar
      */
     public void hefjaLeik() {
         KeyFrame k = new KeyFrame(Duration.seconds(1),
@@ -309,7 +307,7 @@ public class KubbaKappController {
     }
 
     /**
-     * Tíminn fyrir klukkunu er upphafsstilltur eftir því erfiðleikastigi sem er valið
+     * Tíminn fyrir klukkuna er upphafsstilltur eftir því erfiðleikastigi sem er valið
      */
     private void stillaTima(String texti) {
         this.timi = switch (texti) {
@@ -320,6 +318,9 @@ public class KubbaKappController {
         };
     }
 
+    /**
+     * Leikurinn settur á pásu
+     */
     public void pause() {
         if (gullTimeline != null) {
             gullTimeline.pause();
@@ -335,6 +336,9 @@ public class KubbaKappController {
         }
     }
 
+    /**
+     * Leikur tekinn af pásu (ræstur aftur)
+     */
     public void resume() {
         if (gullTimeline != null) {
             gullTimeline.play();
@@ -351,8 +355,8 @@ public class KubbaKappController {
     }
 
         /**
-         * leikurinn endurræstur og kallað á aðferðir til að hreinsa borðið, upphafsstilla gullgrafara og stilla nýjan leik
-         * þessi virkar ish en vil prufa nyjan
+         * leikurinn endurræstur og kallað á aðferðir til að hreinsa borðið, upphafsstilla kallana og stilla nýjan leik
+         *
          */
         public void endurraesa () {
             nyjarTimalinur();
@@ -379,7 +383,10 @@ public class KubbaKappController {
             hefjaLeik();
         }
 
-        private void nyjarTimalinur () {
+    /**
+     * Nýjar tímalínur smóðaðar
+     */
+    private void nyjarTimalinur () {
             if (gullTimeline != null) {
                 gullTimeline.stop();
                 gullTimeline = null;
@@ -397,7 +404,10 @@ public class KubbaKappController {
             }
         }
 
-        public void uppfaeraStigOgLif () {
+    /**
+     * Sigin og lífin uppfærð
+     */
+    public void uppfaeraStigOgLif () {
             fxStig.textProperty().bind(Bindings.concat("Stig: ", leikur.getStigProperty().asString()));
             fxStig2.textProperty().bind(Bindings.concat("Stig: ", leikur2.getStigProperty().asString()));
 
