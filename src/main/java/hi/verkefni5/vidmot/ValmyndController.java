@@ -80,10 +80,10 @@ public class ValmyndController {
      */
     @FXML
     private void onHaldaAfram(ActionEvent actionEvent){
-        try {
+        if (KubbaKappController.getInstance() != null) {
             KubbaKappController.getInstance().resume();
             lokaNuverandiGlugga(actionEvent);
-        } catch (IllegalStateException e) {
+        } else {
             fxAfram.setText("Enginn leikur í gangi");
         }
     }
