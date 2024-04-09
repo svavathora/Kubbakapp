@@ -36,7 +36,7 @@ public class ValmyndController {
      */
     public void initialize() {
         boolean erKveikt = Hljodstillingar.getHljodstillingar().erHljodKveikt();
-        fxHljod.setSelected(erKveikt); // Make sure your UI component reflects the actual setting
+        fxHljod.setSelected(erKveikt);
 
         fxHljod.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             Hljodstillingar.getHljodstillingar().kveikjaAHljodi(isSelected);
@@ -86,6 +86,11 @@ public class ValmyndController {
             fxAfram.setText("Enginn leikur í gangi");
         }
     }
+
+
+
+
+
 
     /**
      * Alert dialog sem spyr hvort notandinn vilji hætta leik
@@ -147,11 +152,20 @@ public class ValmyndController {
         stage.show();
     }
 
+
     @FXML
     private void onTilBaka(ActionEvent actionEvent){
-        Stage nuverandiStage = (Stage) fxTilBaka.getScene().getWindow();
-        nuverandiStage.close();
+        if (KubbaKappController.getInstance() != null) {
+            KubbaKappController.getInstance().resume();
+            lokaNuverandiGlugga(actionEvent);
+        } else {
+            System.out.println("Enginn leikur í gangi");
+            lokaNuverandiGlugga(actionEvent);
+        }
     }
+
+
+
 
     private void lokaNuverandiGlugga(ActionEvent actionEvent) {
         Button sourceButton = (Button) actionEvent.getSource();
@@ -166,7 +180,7 @@ public class ValmyndController {
      */
     public void setGoldController(KubbaKappController kubbaKappController) {
         this.kubbaKappController = kubbaKappController;
-        Hljodstillingar.getHljodstillingar().kveikjaAHljodi(fxHljod.isSelected());
+        //Hljodstillingar.getHljodstillingar().kveikjaAHljodi(fxHljod.isSelected());
     }
 
     public static void main(String[] args) {

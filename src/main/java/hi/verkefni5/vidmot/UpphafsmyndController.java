@@ -3,9 +3,14 @@ package hi.verkefni5.vidmot;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -57,11 +62,30 @@ public class UpphafsmyndController {
      */
     @FXML
     public void onStillingar(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("valmynd-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 202, 300);
-        stage.setScene(scene);
-        stage.show();
+
+        Stage primaryStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("valmynd-view.fxml"));
+            VBox content = fxmlLoader.load();
+            Dialog<Void> dialog = new Dialog<>();
+
+
+            DialogPane dialogPane = new DialogPane();
+            dialogPane.setContent(content);
+            dialog.setDialogPane(dialogPane);
+
+            dialog.initOwner(primaryStage);
+            dialog.initModality(Modality.APPLICATION_MODAL);
+
+
+
+            dialog.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

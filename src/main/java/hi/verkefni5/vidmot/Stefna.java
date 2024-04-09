@@ -7,7 +7,7 @@ public enum Stefna {
     UPP (90);
 
 
-    //tilviskbreyta
+    //tilviksbreyta
     private final int gradur;
 
     /**
