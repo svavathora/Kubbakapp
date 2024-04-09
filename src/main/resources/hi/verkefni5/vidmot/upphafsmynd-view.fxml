@@ -6,21 +6,22 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hi.verkefni5.vidmot.UpphafsmyndController">
+<Pane stylesheets="@css/style.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hi.verkefni5.vidmot.UpphafsmyndController">
     <children>
         <VBox prefHeight="400.0" prefWidth="600.0">
             <children>
-            <Button fx:id="fxStillingar" maxWidth="28.0" minHeight="28.0" minWidth="28.0" mnemonicParsing="false" onAction="#onStillingar" prefHeight="28.0" prefWidth="28.0" snapToPixel="false" text="Button">
-               <graphic>
-                  <ImageView fx:id="fxMyndStillingar" disable="true" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../media/stillingar.png" />
-                     </image></ImageView>
-               </graphic>
-               <VBox.margin>
-                  <Insets left="550.0" top="10.0" />
-               </VBox.margin>
-            </Button>
+                <Button fx:id="fxStillingar" mnemonicParsing="false" onAction="#onStillingar" snapToPixel="false" text="">
+                    <graphic>
+                        <ImageView fx:id="fxMyndStillingar" disable="true" fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../media/stillingar.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets left="550.0" top="10.0" />
+                    </VBox.margin>
+                </Button>
                 <Label alignment="CENTER" prefHeight="128.0" prefWidth="600.0" text="KubbaKapp" textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="36.0" />

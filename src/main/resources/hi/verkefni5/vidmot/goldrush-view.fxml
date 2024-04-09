@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.image.Image?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
             prefWidth="800.0" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="hi.verkefni5.vidmot.KubbaKappController">
@@ -19,9 +20,16 @@
       <children>
         <AnchorPane prefHeight="100.0" prefWidth="800.0">
           <children>
-            <Button fx:id="fxStillingar" alignment="CENTER" contentDisplay="CENTER" layoutX="750" layoutY="10" prefWidth="30"
-                    prefHeight="30" onAction="#onStillingar">
-            </Button>
+              <Button fx:id="fxStillingar" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="750" layoutY="10" prefWidth="30"
+                      prefHeight="30" onAction="#onStillingar" styleClass="transparent-button">
+                  <graphic>
+                      <ImageView fx:id="fxMyndStillingar" disable="true" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@../../../media/stillingar.png" />
+                          </image>
+                      </ImageView>
+                  </graphic>
+              </Button>
             <Label fx:id="fxTimi" alignment="CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="6.0"
                    prefHeight="87.0" prefWidth="445.0" text="Tími: "
                    AnchorPane.bottomAnchor="6.666666666666671" AnchorPane.topAnchor="0.0">
