@@ -11,22 +11,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import vinnsla.*;
-import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import vinnsla.Erfidleikaval;
 import vinnsla.Hljodstillingar;
 import vinnsla.Klukka;
 import vinnsla.Leikur;
@@ -301,7 +296,7 @@ public class KubbaKappController {
      */
     private void leikLokid() {
         System.out.println("Leik lokið");
-        if (gullTimeline != null) {
+       /* if (gullTimeline != null) {
             gullTimeline.stop();
         }
         if (klukkuTimeline != null) {
@@ -312,7 +307,9 @@ public class KubbaKappController {
         }
         if (sprengjuTimeline != null) {
             sprengjuTimeline.stop();
-        }
+        }*/
+        nyjarTimalinur();
+
         if (fxTimi.textProperty().isBound()) {
             fxTimi.textProperty().unbind();
         }
@@ -398,6 +395,14 @@ public class KubbaKappController {
             klukka = new Klukka(timi);
             fxTimi.textProperty().unbind();
             fxTimi.textProperty().bind(Bindings.concat(klukka.getKlukkaProperty().asString(), " sek"));
+
+          /* Platform.runLater(() -> {
+                fxLeikbord1.requestFocus();
+                orvatakkar();  // Reapply key event handlers for player 1
+                fxLeikbord2.requestFocus();
+                orvatakkar2(); // Reapply key event handlers for player 2
+            });*/
+
             raesaKlukku();
             hefjaLeik();
         }
@@ -569,6 +574,12 @@ public class KubbaKappController {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == playAgainButton) {
                     endurraesa();
+                    fxLeikbord1.raesaLeik();
+                    fxLeikbord2.raesaLeik();
+
+                    //stillaHreyfingu();
+                    //hefjaLeik();
+                    //KubbaKappController.getInstance().endurraesa();
                 } else {
                     System.exit(0);
                 }

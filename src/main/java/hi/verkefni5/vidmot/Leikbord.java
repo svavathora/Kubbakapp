@@ -115,6 +115,10 @@ public class Leikbord extends Pane {
         leikurIGangi = false;
     }
 
+    public void raesaLeik(){
+        leikurIGangi = true;
+    }
+
     /**
      * Athugað hvort grafari rekist á gull
      *
