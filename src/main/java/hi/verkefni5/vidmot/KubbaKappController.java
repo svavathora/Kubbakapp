@@ -396,13 +396,6 @@ public class KubbaKappController {
             fxTimi.textProperty().unbind();
             fxTimi.textProperty().bind(Bindings.concat(klukka.getKlukkaProperty().asString(), " sek"));
 
-          /* Platform.runLater(() -> {
-                fxLeikbord1.requestFocus();
-                orvatakkar();  // Reapply key event handlers for player 1
-                fxLeikbord2.requestFocus();
-                orvatakkar2(); // Reapply key event handlers for player 2
-            });*/
-
             raesaKlukku();
             hefjaLeik();
         }
@@ -576,10 +569,6 @@ public class KubbaKappController {
                     endurraesa();
                     fxLeikbord1.raesaLeik();
                     fxLeikbord2.raesaLeik();
-
-                    //stillaHreyfingu();
-                    //hefjaLeik();
-                    //KubbaKappController.getInstance().endurraesa();
                 } else {
                     System.exit(0);
                 }
