@@ -542,13 +542,13 @@ public class KubbaKappController {
 
             String tilkynning;
             if (leikur.getLif() == 0) {
-                tilkynning = "Leikmaður 1 vinnur";
+                tilkynning = fxLeikmadur1.getText() + " vinnur";
             } else if (leikur2.getLif() == 0) {
-                tilkynning = "Leikmaður 2 vinnur";
+                tilkynning = fxLeikmadur2.getText() +" vinnur";
             } else if (stig1 > stig2) {
-                tilkynning = "Leikmaður 2 vinnur með " + stig1 + " stig!";
+                tilkynning = fxLeikmadur2.getText() +" vinnur með " + stig1 + " stig!";
             } else if (stig2 > stig1) {
-                tilkynning = "Leikmaður 1 vinnur með " + stig2 + " stig!";
+                tilkynning = fxLeikmadur1.getText() +" vinnur með " + stig2 + " stig!";
             } else {
                 tilkynning = "Jafntefli! Báðir leikmenn fengu " + stig1 + " stig.";
             }
