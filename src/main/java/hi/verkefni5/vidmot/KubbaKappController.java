@@ -296,18 +296,6 @@ public class KubbaKappController {
      */
     private void leikLokid() {
         System.out.println("Leik lokið");
-       /* if (gullTimeline != null) {
-            gullTimeline.stop();
-        }
-        if (klukkuTimeline != null) {
-            klukkuTimeline.stop();
-        }
-        if (klukka != null) {
-            klukka.stop();
-        }
-        if (sprengjuTimeline != null) {
-            sprengjuTimeline.stop();
-        }*/
         nyjarTimalinur();
 
         if (fxTimi.textProperty().isBound()) {
