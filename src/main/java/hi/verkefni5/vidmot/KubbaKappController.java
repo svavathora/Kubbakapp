@@ -552,6 +552,22 @@ public class KubbaKappController {
 
                 alert.getButtonTypes().setAll(playAgainButton, quitButton);
 
+                URL url = getClass().getResource("/media/bikarTvo.png");
+                assert url != null;
+
+                ImageView customImage = null;
+                try {
+                    customImage = new ImageView(new Image(url.openStream()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                customImage.setFitWidth(100);
+                customImage.setFitHeight(100);
+                alert.getDialogPane().setGraphic(customImage);
+
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 16px; -fx-padding: 7px;");
+
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == playAgainButton) {
                     endurraesa();
