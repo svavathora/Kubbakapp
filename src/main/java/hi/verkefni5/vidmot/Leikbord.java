@@ -61,7 +61,7 @@ public class Leikbord extends Pane {
      * Færir leikmann áfram í þá átt sem stefnan var sett
      */
     public void afram() {
-        final double stepSize = 10;
+        final double stepSize = 14;
         if (!leikurIGangi) {
             return;
         }
