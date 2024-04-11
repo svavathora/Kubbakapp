@@ -35,12 +35,4 @@ public class KubbaKappApplication extends Application {
         return loggedInLeikmadur2;
     }
 
-
-    public static void setLoggedInLeikmadur1(Innskraning innskraning1) {
-        KubbaKappApplication.loggedInLeikmadur1 = innskraning1;
-    }
-
-    public static void setLoggedInLeikmadur2(Innskraning innskraning2) {
-        KubbaKappApplication.loggedInLeikmadur2 = innskraning2;
-    }
 }

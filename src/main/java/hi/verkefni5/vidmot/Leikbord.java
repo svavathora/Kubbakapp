@@ -16,8 +16,6 @@ public class Leikbord extends Pane {
     @FXML
     private Grafari fxGrafari;
 
-    private KubbaKappController kubbaKappController;
-
     /**
      * Smiðurinn, fxml skráin lesin inn
      */

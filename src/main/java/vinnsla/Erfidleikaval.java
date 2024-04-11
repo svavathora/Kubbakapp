@@ -41,8 +41,6 @@ public class Erfidleikaval {
      * property breyta fyrir erfiðleikastigið
      * @return
      */
-    public StringProperty erfidleikiProperty() {
-        return erfidleiki;
-    }
+
 }
 

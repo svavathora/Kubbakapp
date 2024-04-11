@@ -4,7 +4,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
@@ -17,8 +16,6 @@ import java.util.Random;
 
 public class Gull extends Pane {
 
-    private ImageView imageView;
-
     /**
      * Smiður fyrir kassa, skráin lesinn inn og kassarnir smíðaðir í handahófskenndum lit
      */
@@ -27,8 +24,8 @@ public class Gull extends Pane {
         this.setPrefSize(50, 50);
 
         Random random = new Random();
-        int r = random.nextInt(256);
-        int g = random.nextInt(256);
+        int r = random.nextInt(75);
+        int g = random.nextInt(1);
         int b = random.nextInt(256);
         Color randomColor = Color.rgb(r,g,b);
 

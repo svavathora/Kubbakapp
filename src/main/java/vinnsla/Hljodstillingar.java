@@ -7,9 +7,6 @@ public class Hljodstillingar {
     //tilviksbreytur
     private static Hljodstillingar hljodstillingar;
 
-    //default er að kveikt sé á hljóðinu
-    private boolean hljodKveikt = true;
-
     private BooleanProperty hljodKveiktProperty = new SimpleBooleanProperty(true);;
 
     /**

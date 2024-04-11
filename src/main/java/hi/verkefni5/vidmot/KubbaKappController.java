@@ -44,8 +44,6 @@ public class KubbaKappController {
 
     private MediaPlayer mediaPlayer;
 
-    private ErfidleikastigController erfidleikastigController = new ErfidleikastigController();
-
     @FXML
     private Label fxLeikmadur1;
 

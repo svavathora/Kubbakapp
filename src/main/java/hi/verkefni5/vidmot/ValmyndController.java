@@ -15,9 +15,6 @@ public class ValmyndController {
     @FXML
     public RadioButton fxHljod;
 
-    private KubbaKappController kubbaKappController;
-
-
     @FXML
     private Button fxNyrLeikur;
 

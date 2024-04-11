@@ -47,22 +47,12 @@ public class Klukka {
         }
     }
 
-
-
     /**
      * getter fyrir klukku
      * @return klukka
      */
     public SimpleIntegerProperty getKlukkaProperty() {
         return klukkaProperty;
-    }
-
-    /**
-     * endurstilla tima
-     * @param nyrTimi nýr tími
-     */
-    public void endurstillaTima(int nyrTimi) {
-        klukkaProperty.set(nyrTimi);
     }
 
     /**
