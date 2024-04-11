@@ -552,7 +552,7 @@ public class KubbaKappController {
 
                 alert.getButtonTypes().setAll(playAgainButton, quitButton);
 
-                URL url = getClass().getResource("/media/bikarTvo.png");
+                URL url = getClass().getResource("/media/bikar.png");
                 assert url != null;
 
                 ImageView customImage = null;
