@@ -63,21 +63,25 @@ public class ValmyndController {
      */
     @FXML
     private void onNyrLeikur(ActionEvent actionEvent) throws IOException {
-        try {
-
-            KubbaKappController.getInstance().endurraesa();//ef það er leikur í gangi
-            lokaNuverandiGlugga(actionEvent);
-        } catch (IllegalStateException e) {
+        if(KubbaKappController.getInstance() != null) {
             try {
-                Stage stage = new Stage();
-                FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("goldrush-view.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-                stage.setTitle("KubbaKapp");
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException a) {
-                e.printStackTrace();
+
+                KubbaKappController.getInstance().endurraesa();//ef það er leikur í gangi
+                lokaNuverandiGlugga(actionEvent);
+            } catch (IllegalStateException e) {
+                try {
+                    Stage stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(KubbaKappApplication.class.getResource("goldrush-view.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                    stage.setTitle("KubbaKapp");
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException a) {
+                    e.printStackTrace();
+                }
+                lokaNuverandiGlugga(actionEvent);
             }
+        } else {
             lokaNuverandiGlugga(actionEvent);
         }
     }

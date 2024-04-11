@@ -98,15 +98,8 @@ public class KubbaKappController {
      * @return
      */
     public static KubbaKappController getInstance() {
-        /*
-        if (instance == null) {
-            instance = new KubbaKappController();
-        }
-
-         */
         return instance;
     }
-
 
     /**
      * Þegar leikur er hafinn fer þetta í gang
