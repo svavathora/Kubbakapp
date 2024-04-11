@@ -162,7 +162,7 @@ public class Leikbord extends Pane {
     private void arekstur() {
         for (Gull gull : gullListi) {
             if (fxGrafari.getBoundsInParent().intersects(gull.getBoundsInParent())) {
-                getChildren().remove(gull);
+                gull.pickUpAnim(fxGrafari);
                 gullListi.remove(gull);
                 break;
             }

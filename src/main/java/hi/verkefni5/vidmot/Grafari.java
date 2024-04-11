@@ -81,4 +81,11 @@ public class Grafari extends Pane {
             case VINSTRI -> imageView.setImage(blueLeft);
         }
     }
+
+    public double getX() {
+        return this.getLayoutX();
+    }
+    public double getY() {
+        return this.getLayoutY();
+    }
 }
