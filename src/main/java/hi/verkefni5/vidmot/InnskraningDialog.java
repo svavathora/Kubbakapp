@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.util.Pair;
-import vinnsla.Innskraning;
 
 import java.io.IOException;
 
@@ -18,6 +17,9 @@ public class InnskraningDialog extends Dialog<Pair<String, String>> {
     private TextField fxNafnLeikmanns2;
     @FXML
     private ButtonType fxHefjaLeik;
+
+
+
 
     /**
      * Smiður fyrir InnskraningDialog

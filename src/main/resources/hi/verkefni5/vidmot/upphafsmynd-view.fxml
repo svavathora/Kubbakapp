@@ -28,7 +28,7 @@
                         <Insets left="550.0" top="10.0"/>
                     </VBox.margin>
                 </Button>
-                <Button fx:id="fxByrjaLeik" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onByrjaLeik" prefHeight="50.0" prefWidth="150.0" text="Nýr Leikur">
+                <Button fx:id="fxByrjaLeik" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onByrjaLeik" prefHeight="50.0" prefWidth="150.0" text="Nýr leikur">
                     <VBox.margin>
                         <Insets left="225.0" top="200.0" />
                     </VBox.margin>

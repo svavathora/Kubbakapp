@@ -17,6 +17,7 @@ public class ValmyndController {
 
     private KubbaKappController kubbaKappController;
 
+
     @FXML
     private Button fxNyrLeikur;
 
@@ -41,9 +42,17 @@ public class ValmyndController {
         fxHljod.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             Hljodstillingar.getHljodstillingar().kveikjaAHljodi(isSelected);
             if (isSelected) {
-                KubbaKappController.getInstance().spilaLag();
+                if(KubbaKappController.getInstance() == null) {
+                    UpphafsmyndController.getInstance().spilaLag();
+                } else {
+                    UpphafsmyndController.getInstance().stoppaLag();
+                    KubbaKappController.getInstance().spilaLag();
+                }
             } else {
-                KubbaKappController.getInstance().stoppaLag();
+                if (KubbaKappController.getInstance() != null) {
+                    KubbaKappController.getInstance().stoppaLag();
+                    UpphafsmyndController.getInstance().stoppaLag();
+                }
             }
         });
     }
@@ -55,8 +64,8 @@ public class ValmyndController {
     @FXML
     private void onNyrLeikur(ActionEvent actionEvent) throws IOException {
         try {
-            KubbaKappController.getInstance().endurraesa();//ef það er leikur í gangi
 
+            KubbaKappController.getInstance().endurraesa();//ef það er leikur í gangi
             lokaNuverandiGlugga(actionEvent);
         } catch (IllegalStateException e) {
             try {

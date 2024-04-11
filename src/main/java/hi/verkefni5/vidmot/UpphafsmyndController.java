@@ -9,12 +9,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import vinnsla.Hljodstillingar;
 import vinnsla.Innskraning;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Optional;
 
 public class UpphafsmyndController {
@@ -34,6 +38,16 @@ public class UpphafsmyndController {
     @FXML
     private Label fxLeikmadur2;
 
+    private MediaPlayer mediaPlayer;
+
+    private static UpphafsmyndController instance;
+
+    private Hljodstillingar hljodstillingar = Hljodstillingar.getHljodstillingar();
+
+    public UpphafsmyndController() {
+        instance = this;
+    }
+
     /**
      * Þegar upphafsmyndin keyrð þá er náð í nöfn notanda
      */
@@ -46,12 +60,24 @@ public class UpphafsmyndController {
         if (innskraning2 != null) {
             fxLeikmadur2.setText(innskraning2.getNafn2());
         }
+
+        hljodstillingar.hljodKveiktProperty().addListener((obs, varKveikt, erKveikt) -> {
+            if (erKveikt) {
+                if (KubbaKappController.getInstance() != null) {
+                    spilaLag();
+                }
+            } else {
+                stoppaLag();
+            }
+        });
+
+        spilaLag();
     }
 
 
     /**
      * Þegar ýtt er á Byrja leik þá kemur upp dialog fyrir notanda að skrá sig inn með nöfnum
-     * Þegar búið er að skýra notendur þá getur notandi hafið leik og spilaborðið kemur upp
+     * Þegar búið er að skíra notendur þá getur notandi hafið leik og spilaborðið kemur upp
      *
      * @param actionEvent ýtt á byrja leik takkann
      * @throws IOException
@@ -78,7 +104,6 @@ public class UpphafsmyndController {
 
             ((Stage) fxByrjaLeik.getScene().getWindow()).close();
         }
-
     }
 
     /**
@@ -129,5 +154,46 @@ public class UpphafsmyndController {
                 +"KubbaKappar smíðuðu þetta forrit.");
         alert.showAndWait();
     }
+
+    /**
+     * Upphafslagið er spilað
+     */
+    public void spilaLag () {
+        if (!hljodstillingar.erHljodKveikt()) {
+            return;
+        }
+
+        if (mediaPlayer == null || !mediaPlayer.getMedia().getSource().endsWith("/media/byrjunarlag.mp3")) {
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+            }
+            URL mediaUrl = getClass().getResource("/media/byrjunarlag.mp3");
+            if (mediaUrl != null) {
+                Media media = new Media(mediaUrl.toExternalForm());
+                mediaPlayer = new MediaPlayer(media);
+                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            }
+        }
+        mediaPlayer.play();
+    }
+
+    /**
+     * Lagið er stoppað
+     */
+    public void stoppaLag(){
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
+    }
+
+
+    /**
+     * getter fyrir tilviksbreytuna
+     * @return
+     */
+    public static UpphafsmyndController getInstance() {
+        return instance;
+    }
+
 
 }

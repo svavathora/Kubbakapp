@@ -98,8 +98,15 @@ public class KubbaKappController {
      * @return
      */
     public static KubbaKappController getInstance() {
+        /*
+        if (instance == null) {
+            instance = new KubbaKappController();
+        }
+
+         */
         return instance;
     }
+
 
     /**
      * Þegar leikur er hafinn fer þetta í gang
@@ -111,13 +118,11 @@ public class KubbaKappController {
      * Leikur hafinn og klukka ræst og stigin, lífin og tíminn eru tengd viðmót við property breytur
      */
     public void initialize() {
-        erfidleikaval.erfidleikiProperty().addListener((obs, oldDifficulty, newDifficulty) -> {
-            System.out.println("New difficulty is: " + newDifficulty);
-        });
-
         hljodstillingar.hljodKveiktProperty().addListener((obs, varKveikt, erKveikt) -> {
             if (erKveikt) {
-                spilaLag();
+                if (KubbaKappController.getInstance() != null) {
+                    spilaLag();
+                }
             } else {
                 stoppaLag();
             }
@@ -133,7 +138,10 @@ public class KubbaKappController {
 
         String timi = erfidleikaval.getErfidleiki();
         stillaTima(timi);
+
+        UpphafsmyndController.getInstance().stoppaLag();
         spilaLag();
+
         Platform.runLater(() -> fxLeikbord1.requestFocus());
         Platform.runLater(() -> fxLeikbord2.requestFocus());
         stillaHreyfingu();
@@ -187,8 +195,6 @@ public class KubbaKappController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
 
@@ -295,7 +301,6 @@ public class KubbaKappController {
      * klukkan og leikurinn stoppaður
      */
     private void leikLokid() {
-        System.out.println("Leik lokið");
         nyjarTimalinur();
 
         if (fxTimi.textProperty().isBound()) {
@@ -493,22 +498,18 @@ public class KubbaKappController {
                 return;
             }
 
-            if (mediaPlayer != null && !mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
-                mediaPlayer.play();
-                return;
-            }
-
-            if (mediaPlayer == null) {
+            if (mediaPlayer == null || !mediaPlayer.getMedia().getSource().endsWith("/media/lag.mp3")) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                }
                 URL mediaUrl = getClass().getResource("/media/lag.mp3");
                 if (mediaUrl != null) {
                     Media media = new Media(mediaUrl.toExternalForm());
                     mediaPlayer = new MediaPlayer(media);
                     mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                    mediaPlayer.play();
-                } else {
-                    System.err.println("Skráin fannst ekki: media/lag.mp3");
                 }
             }
+            mediaPlayer.play();
         }
 
         /**
