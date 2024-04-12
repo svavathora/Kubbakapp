@@ -24,8 +24,8 @@ public class Gull extends Pane {
         this.setPrefSize(50, 50);
 
         Random random = new Random();
-        int r = random.nextInt(75);
-        int g = random.nextInt(1);
+        int r = random.nextInt(256);
+        int g = random.nextInt(256);
         int b = random.nextInt(256);
         Color randomColor = Color.rgb(r,g,b);
 
